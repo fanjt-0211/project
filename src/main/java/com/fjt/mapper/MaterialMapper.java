@@ -1,0 +1,20 @@
+package com.fjt.mapper;
+
+import com.fjt.pojo.Material;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+@Mapper
+public interface MaterialMapper {
+    void insert(Material material);
+    void update(Material material);
+    void deleteById(Long id);
+    Material findById(Long id);
+    Material findByCode(String code);
+    List<Material> findAll();
+    List<Material> findByCategoryId(Long categoryId);
+    List<Material> search(@Param("keyword") String keyword);
+    List<Material> findStockWarning();
+}

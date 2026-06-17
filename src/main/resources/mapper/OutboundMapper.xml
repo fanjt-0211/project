@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjt.mapper.OutboundMapper">
+    <insert id="insert" parameterType="com.fjt.pojo.Outbound">
+        INSERT INTO outbound(outbound_no, type, material_id, warehouse_id, quantity, unit_price, total_amount, recipient, department, operator_id, remark, status)
+        VALUES(#{outboundNo}, #{type}, #{materialId}, #{warehouseId}, #{quantity}, #{unitPrice}, #{totalAmount}, #{recipient}, #{department}, #{operatorId}, #{remark}, #{status})
+    </insert>
+
+    <update id="update" parameterType="com.fjt.pojo.Outbound">
+        UPDATE outbound
+        SET type=#{type}, quantity=#{quantity}, unit_price=#{unitPrice}, total_amount=#{totalAmount}, 
+            recipient=#{recipient}, department=#{department}, remark=#{remark}, status=#{status}
+        WHERE id=#{id}
+    </update>
+
+    <select id="findById" resultType="com.fjt.pojo.Outbound">
+        SELECT * FROM outbound WHERE id=#{id}
+    </select>
+
+    <select id="findByOutboundNo" resultType="com.fjt.pojo.Outbound">
+        SELECT * FROM outbound WHERE outbound_no=#{outboundNo}
+    </select>
+
+    <select id="findAll" resultType="com.fjt.pojo.Outbound">
+        SELECT * FROM outbound ORDER BY created_at DESC
+    </select>
+
+    <select id="findByType" resultType="com.fjt.pojo.Outbound">
+        SELECT * FROM outbound WHERE type=#{type} ORDER BY created_at DESC
+    </select>
+
+    <select id="findByMaterialId" resultType="com.fjt.pojo.Outbound">
+        SELECT * FROM outbound WHERE material_id=#{materialId} ORDER BY created_at DESC
+    </select>
+
+    <select id="findByWarehouseId" resultType="com.fjt.pojo.Outbound">
+        SELECT * FROM outbound WHERE warehouse_id=#{warehouseId} ORDER BY created_at DESC
+    </select>
+
+    <select id="findByTimeRange" resultType="com.fjt.pojo.Outbound">
+        SELECT * FROM outbound WHERE created_at BETWEEN #{startTime} AND #{endTime} ORDER BY created_at DESC
+    </select>
+
+    <select id="findByOperatorId" resultType="com.fjt.pojo.Outbound">
+        SELECT * FROM outbound WHERE operator_id=#{operatorId} ORDER BY created_at DESC
+    </select>
+</mapper>

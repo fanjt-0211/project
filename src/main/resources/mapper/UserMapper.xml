@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjt.mapper.UserMapper">
+    <insert id="insert" parameterType="com.fjt.pojo.User">
+        INSERT INTO warehouse_user(username, password, real_name, phone, email, role, status)
+        VALUES(#{username}, #{password}, #{realName}, #{phone}, #{email}, #{role}, #{status})
+    </insert>
+
+    <update id="update" parameterType="com.fjt.pojo.User">
+        UPDATE warehouse_user
+        SET password=#{password}, real_name=#{realName}, phone=#{phone}, email=#{email}, role=#{role}, status=#{status}
+        WHERE id=#{id}
+    </update>
+
+    <update id="deleteById">
+        UPDATE warehouse_user SET is_deleted=1 WHERE id=#{id}
+    </update>
+
+    <select id="findById" resultType="com.fjt.pojo.User">
+        SELECT * FROM warehouse_user WHERE id=#{id} AND is_deleted=0
+    </select>
+
+    <select id="findByUsername" resultType="com.fjt.pojo.User">
+        SELECT * FROM warehouse_user WHERE username=#{username} AND is_deleted=0
+    </select>
+
+    <select id="findAll" resultType="com.fjt.pojo.User">
+        SELECT * FROM warehouse_user WHERE is_deleted=0 ORDER BY created_at DESC
+    </select>
+</mapper>

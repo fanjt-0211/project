@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjt.mapper.MaterialCategoryMapper">
+    <insert id="insert" parameterType="com.fjt.pojo.MaterialCategory">
+        INSERT INTO material_category(name, description, parent_id, sort_order)
+        VALUES(#{name}, #{description}, #{parentId}, #{sortOrder})
+    </insert>
+
+    <update id="update" parameterType="com.fjt.pojo.MaterialCategory">
+        UPDATE material_category
+        SET name=#{name}, description=#{description}, parent_id=#{parentId}, sort_order=#{sortOrder}
+        WHERE id=#{id}
+    </update>
+
+    <update id="deleteById">
+        UPDATE material_category SET is_deleted=1 WHERE id=#{id}
+    </update>
+
+    <select id="findById" resultType="com.fjt.pojo.MaterialCategory">
+        SELECT * FROM material_category WHERE id=#{id} AND is_deleted=0
+    </select>
+
+    <select id="findAll" resultType="com.fjt.pojo.MaterialCategory">
+        SELECT * FROM material_category WHERE is_deleted=0 ORDER BY sort_order, id
+    </select>
+
+    <select id="findByParentId" resultType="com.fjt.pojo.MaterialCategory">
+        SELECT * FROM material_category WHERE parent_id=#{parentId} AND is_deleted=0 ORDER BY sort_order
+    </select>
+
+    <select id="findByName" resultType="com.fjt.pojo.MaterialCategory">
+        SELECT * FROM material_category WHERE name LIKE CONCAT('%', #{name}, '%') AND is_deleted=0
+    </select>
+</mapper>
