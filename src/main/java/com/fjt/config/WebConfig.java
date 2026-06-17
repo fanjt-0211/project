@@ -20,6 +20,9 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/login");
     }
 
+    /**
+     * 跨域配置
+     */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
