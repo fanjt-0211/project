@@ -21,6 +21,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private JwtUtils jwtUtils;
+
     /**
      * 用户登录
      */
@@ -28,7 +31,7 @@ public class UserController {
     public Result<Map<String, Object>> login(@RequestBody LoginDTO loginDTO) {
         UserVO userVO = userService.login(loginDTO);
         if (userVO != null) {
-            String token = JwtUtils.generateToken(userVO.getId(), userVO.getUsername());
+            String token = jwtUtils.generateToken(userVO.getId(), userVO.getUsername());
             Map<String, Object> data = new HashMap<>();
             data.put("token", token);
             data.put("user", userVO);

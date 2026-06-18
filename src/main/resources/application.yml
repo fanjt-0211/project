@@ -26,3 +26,9 @@ mybatis:
 logging:
   level:
     com.fjt.mapper: debug
+
+fjt:
+  jwt:
+    admin-secret-key: fjt
+    admin-ttl: 7200000
+    admin-token-name: token
