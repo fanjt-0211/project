@@ -32,19 +32,22 @@
     </select>
 
     <select id="search" resultType="com.fjt.pojo.entity.MaterialCategory">
-        SELECT * FROM material_category WHERE is_deleted=0
-        <if test="name != null and name != ''">
-            AND name LIKE CONCAT('%', #{name}, '%')
-        </if>
-        <if test="code != null and code != ''">
-            AND code LIKE CONCAT('%', #{code}, '%')
-        </if>
-        <if test="parentId != null">
-            AND parent_id = #{parentId}
-        </if>
-        <if test="status != null">
-            AND status = #{status}
-        </if>
+        SELECT * FROM material_category
+        <where>
+            is_deleted=0
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="code != null and code != ''">
+                AND code LIKE CONCAT('%', #{code}, '%')
+            </if>
+            <if test="parentId != null">
+                AND parent_id = #{parentId}
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+        </where>
         ORDER BY sort_order, id
     </select>
 </mapper>

@@ -36,16 +36,19 @@
     </select>
 
     <select id="search" resultType="com.fjt.pojo.entity.User">
-        SELECT * FROM warehouse_user WHERE is_deleted=0
-        <if test="username != null and username != ''">
-            AND username LIKE CONCAT('%', #{username}, '%')
-        </if>
-        <if test="realName != null and realName != ''">
-            AND real_name LIKE CONCAT('%', #{realName}, '%')
-        </if>
-        <if test="role != null">
-            AND role = #{role}
-        </if>
+        SELECT * FROM warehouse_user
+        <where>
+            is_deleted=0
+            <if test="username != null and username != ''">
+                AND username LIKE CONCAT('%', #{username}, '%')
+            </if>
+            <if test="realName != null and realName != ''">
+                AND real_name LIKE CONCAT('%', #{realName}, '%')
+            </if>
+            <if test="role != null">
+                AND role = #{role}
+            </if>
+        </where>
         ORDER BY created_at DESC
     </select>
 </mapper>

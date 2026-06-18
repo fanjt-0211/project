@@ -34,31 +34,33 @@
     </select>
 
     <select id="search" resultType="com.fjt.pojo.entity.Outbound">
-        SELECT * FROM outbound WHERE 1=1
-        <if test="id != null">
-            AND id = #{id}
-        </if>
-        <if test="outboundNo != null and outboundNo != ''">
-            AND outbound_no LIKE CONCAT('%', #{outboundNo}, '%')
-        </if>
-        <if test="type != null">
-            AND type = #{type}
-        </if>
-        <if test="materialId != null">
-            AND material_id = #{materialId}
-        </if>
-        <if test="warehouseId != null">
-            AND warehouse_id = #{warehouseId}
-        </if>
-        <if test="operatorId != null">
-            AND operator_id = #{operatorId}
-        </if>
-        <if test="startTime != null">
-            AND created_at >= #{startTime}
-        </if>
-        <if test="endTime != null">
-            AND created_at &lt;= #{endTime}
-        </if>
+        SELECT * FROM outbound
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="outboundNo != null and outboundNo != ''">
+                AND outbound_no LIKE CONCAT('%', #{outboundNo}, '%')
+            </if>
+            <if test="type != null">
+                AND type = #{type}
+            </if>
+            <if test="materialId != null">
+                AND material_id = #{materialId}
+            </if>
+            <if test="warehouseId != null">
+                AND warehouse_id = #{warehouseId}
+            </if>
+            <if test="operatorId != null">
+                AND operator_id = #{operatorId}
+            </if>
+            <if test="startTime != null">
+                AND created_at >= #{startTime}
+            </if>
+            <if test="endTime != null">
+                AND created_at &lt;= #{endTime}
+            </if>
+        </where>
         ORDER BY created_at DESC
     </select>
 </mapper>
