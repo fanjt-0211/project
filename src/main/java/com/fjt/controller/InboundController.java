@@ -1,14 +1,13 @@
 package com.fjt.controller;
 
 import com.fjt.pojo.dto.InboundDTO;
+import com.fjt.pojo.dto.InboundQueryDTO;
 import com.fjt.pojo.Result;
 import com.fjt.pojo.vo.InboundVO;
 import com.fjt.service.InboundService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -18,38 +17,34 @@ public class InboundController {
     @Autowired
     private InboundService inboundService;
 
+    /**
+     * 查询所有入库单
+     */
     @GetMapping
     public Result<List<InboundVO>> list() {
         return Result.success(inboundService.findAll());
     }
 
+    /**
+     * 根据id查询入库单
+     */
     @GetMapping("/{id}")
     public Result<InboundVO> getById(@PathVariable Long id) {
         return Result.success(inboundService.findById(id));
     }
 
-    @GetMapping("/type/{type}")
-    public Result<List<InboundVO>> getByType(@PathVariable Integer type) {
-        return Result.success(inboundService.findByType(type));
+    /**
+     * 通用查询接口 - 支持多条件查询
+     * 参数可为空，为空则查询所有
+     */
+    @GetMapping("/search")
+    public Result<List<InboundVO>> search(InboundQueryDTO query) {
+        return Result.success(inboundService.search(query));
     }
 
-    @GetMapping("/material/{materialId}")
-    public Result<List<InboundVO>> getByMaterialId(@PathVariable Long materialId) {
-        return Result.success(inboundService.findByMaterialId(materialId));
-    }
-
-    @GetMapping("/warehouse/{warehouseId}")
-    public Result<List<InboundVO>> getByWarehouseId(@PathVariable Long warehouseId) {
-        return Result.success(inboundService.findByWarehouseId(warehouseId));
-    }
-
-    @GetMapping("/time-range")
-    public Result<List<InboundVO>> getByTimeRange(
-            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime startTime,
-            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime endTime) {
-        return Result.success(inboundService.findByTimeRange(startTime, endTime));
-    }
-
+    /**
+     * 添加入库单
+     */
     @PostMapping
     public Result<Void> add(@RequestBody InboundDTO dto) {
         inboundService.add(dto);

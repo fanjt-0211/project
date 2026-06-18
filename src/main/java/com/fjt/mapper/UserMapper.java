@@ -1,5 +1,6 @@
 package com.fjt.mapper;
 
+import com.fjt.pojo.dto.UserQueryDTO;
 import com.fjt.pojo.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,4 +14,5 @@ public interface UserMapper {
     User findById(Long id);
     User findByUsername(String username);
     List<User> findAll();
+    List<User> search(UserQueryDTO query);
 }

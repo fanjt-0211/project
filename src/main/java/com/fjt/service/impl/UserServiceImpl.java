@@ -2,6 +2,7 @@ package com.fjt.service.impl;
 
 import com.fjt.mapper.UserMapper;
 import com.fjt.pojo.dto.LoginDTO;
+import com.fjt.pojo.dto.UserQueryDTO;
 import com.fjt.pojo.entity.User;
 import com.fjt.pojo.vo.UserVO;
 import com.fjt.service.UserService;
@@ -57,6 +58,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserVO> findAll() {
         return userMapper.findAll().stream()
+                .map(this::convertToVO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserVO> search(UserQueryDTO query) {
+        return userMapper.search(query).stream()
                 .map(this::convertToVO)
                 .collect(Collectors.toList());
     }

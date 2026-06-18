@@ -1,5 +1,6 @@
 package com.fjt.mapper;
 
+import com.fjt.pojo.dto.MaterialQueryDTO;
 import com.fjt.pojo.entity.Material;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -14,7 +15,6 @@ public interface MaterialMapper {
     Material findById(Long id);
     Material findByCode(String code);
     List<Material> findAll();
-    List<Material> findByCategoryId(Long categoryId);
-    List<Material> search(@Param("keyword") String keyword);
+    List<Material> search(MaterialQueryDTO query);
     List<Material> findStockWarning();
 }

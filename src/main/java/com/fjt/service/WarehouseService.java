@@ -1,7 +1,9 @@
 package com.fjt.service;
 
 import com.fjt.pojo.dto.WarehouseDTO;
+import com.fjt.pojo.dto.WarehouseQueryDTO;
 import com.fjt.pojo.entity.Warehouse;
+import com.fjt.pojo.vo.WarehouseVO;
 
 import java.util.List;
 
@@ -11,5 +13,6 @@ public interface WarehouseService {
     void delete(Long id);
     Warehouse findById(Long id);
     Warehouse findByCode(String code);
-    List<Warehouse> findAll();
+    List<WarehouseVO> findAll();
+    List<WarehouseVO> search(WarehouseQueryDTO query);
 }

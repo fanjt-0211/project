@@ -8,7 +8,14 @@
 
     <update id="update" parameterType="com.fjt.pojo.entity.User">
         UPDATE warehouse_user
-        SET password=#{password}, real_name=#{realName}, phone=#{phone}, email=#{email}, role=#{role}, status=#{status}
+        <set>
+            <if test="password != null and password != ''">password=#{password},</if>
+            <if test="realName != null and realName != ''">real_name=#{realName},</if>
+            <if test="phone != null and phone != ''">phone=#{phone},</if>
+            <if test="email != null and email != ''">email=#{email},</if>
+            <if test="role != null">role=#{role},</if>
+            <if test="status != null">status=#{status},</if>
+        </set>
         WHERE id=#{id}
     </update>
 
@@ -26,5 +33,19 @@
 
     <select id="findAll" resultType="com.fjt.pojo.entity.User">
         SELECT * FROM warehouse_user WHERE is_deleted=0 ORDER BY created_at DESC
+    </select>
+
+    <select id="search" resultType="com.fjt.pojo.entity.User">
+        SELECT * FROM warehouse_user WHERE is_deleted=0
+        <if test="username != null and username != ''">
+            AND username LIKE CONCAT('%', #{username}, '%')
+        </if>
+        <if test="realName != null and realName != ''">
+            AND real_name LIKE CONCAT('%', #{realName}, '%')
+        </if>
+        <if test="role != null">
+            AND role = #{role}
+        </if>
+        ORDER BY created_at DESC
     </select>
 </mapper>

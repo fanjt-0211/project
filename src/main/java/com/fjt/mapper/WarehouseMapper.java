@@ -1,5 +1,6 @@
 package com.fjt.mapper;
 
+import com.fjt.pojo.dto.WarehouseQueryDTO;
 import com.fjt.pojo.entity.Warehouse;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,4 +14,5 @@ public interface WarehouseMapper {
     Warehouse findById(Long id);
     Warehouse findByCode(String code);
     List<Warehouse> findAll();
+    List<Warehouse> search(WarehouseQueryDTO query);
 }

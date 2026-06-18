@@ -5,6 +5,7 @@ import com.fjt.mapper.OutboundMapper;
 import com.fjt.mapper.UserMapper;
 import com.fjt.mapper.WarehouseMapper;
 import com.fjt.pojo.dto.OutboundDTO;
+import com.fjt.pojo.dto.OutboundQueryDTO;
 import com.fjt.pojo.entity.Material;
 import com.fjt.pojo.entity.Outbound;
 import com.fjt.pojo.entity.Stock;
@@ -95,36 +96,8 @@ public class OutboundServiceImpl implements OutboundService {
     }
 
     @Override
-    public List<OutboundVO> findByType(Integer type) {
-        return outboundMapper.findByType(type).stream()
-                .map(this::convertToVO)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<OutboundVO> findByMaterialId(Long materialId) {
-        return outboundMapper.findByMaterialId(materialId).stream()
-                .map(this::convertToVO)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<OutboundVO> findByWarehouseId(Long warehouseId) {
-        return outboundMapper.findByWarehouseId(warehouseId).stream()
-                .map(this::convertToVO)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<OutboundVO> findByTimeRange(LocalDateTime startTime, LocalDateTime endTime) {
-        return outboundMapper.findByTimeRange(startTime, endTime).stream()
-                .map(this::convertToVO)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<OutboundVO> findByOperatorId(Long operatorId) {
-        return outboundMapper.findByOperatorId(operatorId).stream()
+    public List<OutboundVO> search(OutboundQueryDTO query) {
+        return outboundMapper.search(query).stream()
                 .map(this::convertToVO)
                 .collect(Collectors.toList());
     }

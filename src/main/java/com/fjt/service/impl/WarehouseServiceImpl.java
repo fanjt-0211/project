@@ -2,13 +2,16 @@ package com.fjt.service.impl;
 
 import com.fjt.mapper.WarehouseMapper;
 import com.fjt.pojo.dto.WarehouseDTO;
+import com.fjt.pojo.dto.WarehouseQueryDTO;
 import com.fjt.pojo.entity.Warehouse;
+import com.fjt.pojo.vo.WarehouseVO;
 import com.fjt.service.WarehouseService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class WarehouseServiceImpl implements WarehouseService {
@@ -48,7 +51,22 @@ public class WarehouseServiceImpl implements WarehouseService {
     }
 
     @Override
-    public List<Warehouse> findAll() {
-        return warehouseMapper.findAll();
+    public List<WarehouseVO> findAll() {
+        return warehouseMapper.findAll().stream()
+                .map(this::convertToVO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<WarehouseVO> search(WarehouseQueryDTO query) {
+        return warehouseMapper.search(query).stream()
+                .map(this::convertToVO)
+                .collect(Collectors.toList());
+    }
+
+    private WarehouseVO convertToVO(Warehouse warehouse) {
+        WarehouseVO vo = new WarehouseVO();
+        BeanUtils.copyProperties(warehouse, vo);
+        return vo;
     }
 }

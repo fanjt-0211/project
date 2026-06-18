@@ -8,7 +8,14 @@
 
     <update id="update" parameterType="com.fjt.pojo.entity.Warehouse">
         UPDATE warehouse
-        SET name=#{name}, location=#{location}, capacity=#{capacity}, description=#{description}
+        <set>
+            <if test="code != null and code != ''">code=#{code},</if>
+            <if test="name != null and name != ''">name=#{name},</if>
+            <if test="location != null and location != ''">location=#{location},</if>
+            <if test="capacity != null">capacity=#{capacity},</if>
+            <if test="description != null">description=#{description},</if>
+            <if test="status != null">status=#{status},</if>
+        </set>
         WHERE id=#{id}
     </update>
 
@@ -26,5 +33,22 @@
 
     <select id="findAll" resultType="com.fjt.pojo.entity.Warehouse">
         SELECT * FROM warehouse WHERE is_deleted=0 ORDER BY code
+    </select>
+
+    <select id="search" resultType="com.fjt.pojo.entity.Warehouse">
+        SELECT * FROM warehouse WHERE is_deleted=0
+        <if test="code != null and code != ''">
+            AND code LIKE CONCAT('%', #{code}, '%')
+        </if>
+        <if test="name != null and name != ''">
+            AND name LIKE CONCAT('%', #{name}, '%')
+        </if>
+        <if test="location != null and location != ''">
+            AND location LIKE CONCAT('%', #{location}, '%')
+        </if>
+        <if test="status != null">
+            AND status = #{status}
+        </if>
+        ORDER BY code
     </select>
 </mapper>

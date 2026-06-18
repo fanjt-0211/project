@@ -1,6 +1,7 @@
 package com.fjt.service;
 
 import com.fjt.pojo.dto.LoginDTO;
+import com.fjt.pojo.dto.UserQueryDTO;
 import com.fjt.pojo.entity.User;
 import com.fjt.pojo.vo.UserVO;
 
@@ -14,4 +15,5 @@ public interface UserService {
     UserVO findById(Long id);
     User findByUsername(String username);
     List<UserVO> findAll();
+    List<UserVO> search(UserQueryDTO query);
 }

@@ -8,8 +8,15 @@
 
     <update id="update" parameterType="com.fjt.pojo.entity.Inbound">
         UPDATE inbound
-        SET type=#{type}, quantity=#{quantity}, unit_price=#{unitPrice}, total_amount=#{totalAmount}, 
-            supplier=#{supplier}, remark=#{remark}, status=#{status}
+        <set>
+            <if test="type != null">type=#{type},</if>
+            <if test="quantity != null">quantity=#{quantity},</if>
+            <if test="unitPrice != null">unit_price=#{unitPrice},</if>
+            <if test="totalAmount != null">total_amount=#{totalAmount},</if>
+            <if test="supplier != null and supplier != ''">supplier=#{supplier},</if>
+            <if test="remark != null">remark=#{remark},</if>
+            <if test="status != null">status=#{status},</if>
+        </set>
         WHERE id=#{id}
     </update>
 
@@ -25,23 +32,32 @@
         SELECT * FROM inbound ORDER BY created_at DESC
     </select>
 
-    <select id="findByType" resultType="com.fjt.pojo.entity.Inbound">
-        SELECT * FROM inbound WHERE type=#{type} ORDER BY created_at DESC
-    </select>
-
-    <select id="findByMaterialId" resultType="com.fjt.pojo.entity.Inbound">
-        SELECT * FROM inbound WHERE material_id=#{materialId} ORDER BY created_at DESC
-    </select>
-
-    <select id="findByWarehouseId" resultType="com.fjt.pojo.entity.Inbound">
-        SELECT * FROM inbound WHERE warehouse_id=#{warehouseId} ORDER BY created_at DESC
-    </select>
-
-    <select id="findByTimeRange" resultType="com.fjt.pojo.entity.Inbound">
-        SELECT * FROM inbound WHERE created_at BETWEEN #{startTime} AND #{endTime} ORDER BY created_at DESC
-    </select>
-
-    <select id="findByOperatorId" resultType="com.fjt.pojo.entity.Inbound">
-        SELECT * FROM inbound WHERE operator_id=#{operatorId} ORDER BY created_at DESC
+    <select id="search" resultType="com.fjt.pojo.entity.Inbound">
+        SELECT * FROM inbound WHERE 1=1
+        <if test="id != null">
+            AND id = #{id}
+        </if>
+        <if test="inboundNo != null and inboundNo != ''">
+            AND inbound_no LIKE CONCAT('%', #{inboundNo}, '%')
+        </if>
+        <if test="type != null">
+            AND type = #{type}
+        </if>
+        <if test="materialId != null">
+            AND material_id = #{materialId}
+        </if>
+        <if test="warehouseId != null">
+            AND warehouse_id = #{warehouseId}
+        </if>
+        <if test="operatorId != null">
+            AND operator_id = #{operatorId}
+        </if>
+        <if test="startTime != null">
+            AND created_at >= #{startTime}
+        </if>
+        <if test="endTime != null">
+            AND created_at &lt;= #{endTime}
+        </if>
+        ORDER BY created_at DESC
     </select>
 </mapper>

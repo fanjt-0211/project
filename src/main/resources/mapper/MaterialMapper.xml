@@ -8,9 +8,19 @@
 
     <update id="update" parameterType="com.fjt.pojo.entity.Material">
         UPDATE material
-        SET name=#{name}, category_id=#{categoryId}, specification=#{specification}, unit=#{unit}, 
-            purchase_price=#{purchasePrice}, sell_price=#{sellPrice}, min_stock=#{minStock}, 
-            max_stock=#{maxStock}, description=#{description}
+        <set>
+            <if test="code != null and code != ''">code=#{code},</if>
+            <if test="name != null and name != ''">name=#{name},</if>
+            <if test="categoryId != null">category_id=#{categoryId},</if>
+            <if test="specification != null and specification != ''">specification=#{specification},</if>
+            <if test="unit != null and unit != ''">unit=#{unit},</if>
+            <if test="purchasePrice != null">purchase_price=#{purchasePrice},</if>
+            <if test="sellPrice != null">sell_price=#{sellPrice},</if>
+            <if test="minStock != null">min_stock=#{minStock},</if>
+            <if test="maxStock != null">max_stock=#{maxStock},</if>
+            <if test="description != null">description=#{description},</if>
+            <if test="status != null">status=#{status},</if>
+        </set>
         WHERE id=#{id}
     </update>
 
@@ -30,12 +40,24 @@
         SELECT * FROM material WHERE is_deleted=0 ORDER BY created_at DESC
     </select>
 
-    <select id="findByCategoryId" resultType="com.fjt.pojo.entity.Material">
-        SELECT * FROM material WHERE category_id=#{categoryId} AND is_deleted=0 ORDER BY created_at DESC
-    </select>
-
     <select id="search" resultType="com.fjt.pojo.entity.Material">
-        SELECT * FROM material WHERE is_deleted=0 AND (code LIKE CONCAT('%', #{keyword}, '%') OR name LIKE CONCAT('%', #{keyword}, '%'))
+        SELECT * FROM material WHERE is_deleted=0
+        <if test="code != null and code != ''">
+            AND code LIKE CONCAT('%', #{code}, '%')
+        </if>
+        <if test="name != null and name != ''">
+            AND name LIKE CONCAT('%', #{name}, '%')
+        </if>
+        <if test="spec != null and spec != ''">
+            AND specification LIKE CONCAT('%', #{spec}, '%')
+        </if>
+        <if test="categoryId != null">
+            AND category_id = #{categoryId}
+        </if>
+        <if test="status != null">
+            AND status = #{status}
+        </if>
+        ORDER BY created_at DESC
     </select>
 
     <select id="findStockWarning" resultType="com.fjt.pojo.entity.Material">

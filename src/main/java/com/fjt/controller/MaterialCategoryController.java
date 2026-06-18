@@ -1,6 +1,7 @@
 package com.fjt.controller;
 
 import com.fjt.pojo.dto.MaterialCategoryDTO;
+import com.fjt.pojo.dto.MaterialCategoryQueryDTO;
 import com.fjt.pojo.Result;
 import com.fjt.pojo.vo.MaterialCategoryVO;
 import com.fjt.service.MaterialCategoryService;
@@ -16,38 +17,52 @@ public class MaterialCategoryController {
     @Autowired
     private MaterialCategoryService materialCategoryService;
 
+    /**
+     * 查询所有分类
+     */
     @GetMapping
     public Result<List<MaterialCategoryVO>> list() {
         return Result.success(materialCategoryService.findAll());
     }
 
+    /**
+     * 根据id查询分类
+     */
     @GetMapping("/{id}")
     public Result<MaterialCategoryVO> getById(@PathVariable Long id) {
         return Result.success(materialCategoryService.findById(id));
     }
 
-    @GetMapping("/parent/{parentId}")
-    public Result<List<MaterialCategoryVO>> getByParentId(@PathVariable Long parentId) {
-        return Result.success(materialCategoryService.findByParentId(parentId));
-    }
-
+    /**
+     * 通用查询接口 - 支持多条件模糊查询
+     * 参数可为空，为空则查询所有
+     */
     @GetMapping("/search")
-    public Result<List<MaterialCategoryVO>> search(@RequestParam String name) {
-        return Result.success(materialCategoryService.findByName(name));
+    public Result<List<MaterialCategoryVO>> search(MaterialCategoryQueryDTO query) {
+        return Result.success(materialCategoryService.search(query));
     }
 
+    /**
+     * 添加分类
+     */
     @PostMapping
     public Result<Void> add(@RequestBody MaterialCategoryDTO dto) {
         materialCategoryService.add(dto);
         return Result.success();
     }
 
+    /**
+     * 修改分类
+     */
     @PutMapping("/{id}")
     public Result<Void> update(@RequestBody MaterialCategoryDTO dto, @PathVariable Long id) {
         materialCategoryService.update(dto, id);
         return Result.success();
     }
 
+    /**
+     * 删除分类
+     */
     @DeleteMapping("/{id}")
     public Result<Void> delete(@PathVariable Long id) {
         materialCategoryService.delete(id);

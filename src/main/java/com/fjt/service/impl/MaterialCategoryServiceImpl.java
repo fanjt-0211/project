@@ -2,6 +2,7 @@ package com.fjt.service.impl;
 
 import com.fjt.mapper.MaterialCategoryMapper;
 import com.fjt.pojo.dto.MaterialCategoryDTO;
+import com.fjt.pojo.dto.MaterialCategoryQueryDTO;
 import com.fjt.pojo.entity.MaterialCategory;
 import com.fjt.pojo.vo.MaterialCategoryVO;
 import com.fjt.service.MaterialCategoryService;
@@ -53,15 +54,8 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
     }
 
     @Override
-    public List<MaterialCategoryVO> findByParentId(Long parentId) {
-        return materialCategoryMapper.findByParentId(parentId).stream()
-                .map(this::convertToVO)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<MaterialCategoryVO> findByName(String name) {
-        return materialCategoryMapper.findByName(name).stream()
+    public List<MaterialCategoryVO> search(MaterialCategoryQueryDTO query) {
+        return materialCategoryMapper.search(query).stream()
                 .map(this::convertToVO)
                 .collect(Collectors.toList());
     }

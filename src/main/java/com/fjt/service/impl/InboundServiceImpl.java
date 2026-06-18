@@ -5,6 +5,7 @@ import com.fjt.mapper.MaterialMapper;
 import com.fjt.mapper.UserMapper;
 import com.fjt.mapper.WarehouseMapper;
 import com.fjt.pojo.dto.InboundDTO;
+import com.fjt.pojo.dto.InboundQueryDTO;
 import com.fjt.pojo.entity.Inbound;
 import com.fjt.pojo.entity.Material;
 import com.fjt.pojo.entity.User;
@@ -89,36 +90,8 @@ public class InboundServiceImpl implements InboundService {
     }
 
     @Override
-    public List<InboundVO> findByType(Integer type) {
-        return inboundMapper.findByType(type).stream()
-                .map(this::convertToVO)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<InboundVO> findByMaterialId(Long materialId) {
-        return inboundMapper.findByMaterialId(materialId).stream()
-                .map(this::convertToVO)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<InboundVO> findByWarehouseId(Long warehouseId) {
-        return inboundMapper.findByWarehouseId(warehouseId).stream()
-                .map(this::convertToVO)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<InboundVO> findByTimeRange(LocalDateTime startTime, LocalDateTime endTime) {
-        return inboundMapper.findByTimeRange(startTime, endTime).stream()
-                .map(this::convertToVO)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<InboundVO> findByOperatorId(Long operatorId) {
-        return inboundMapper.findByOperatorId(operatorId).stream()
+    public List<InboundVO> search(InboundQueryDTO query) {
+        return inboundMapper.search(query).stream()
                 .map(this::convertToVO)
                 .collect(Collectors.toList());
     }

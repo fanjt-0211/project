@@ -3,6 +3,7 @@ package com.fjt.service.impl;
 import com.fjt.mapper.MaterialMapper;
 import com.fjt.mapper.StockMapper;
 import com.fjt.mapper.WarehouseMapper;
+import com.fjt.pojo.dto.StockQueryDTO;
 import com.fjt.pojo.entity.Material;
 import com.fjt.pojo.entity.Stock;
 import com.fjt.pojo.entity.Warehouse;
@@ -62,15 +63,8 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public List<StockVO> findByMaterialId(Long materialId) {
-        return stockMapper.findByMaterialId(materialId).stream()
-                .map(this::convertToVO)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<StockVO> findByWarehouseId(Long warehouseId) {
-        return stockMapper.findByWarehouseId(warehouseId).stream()
+    public List<StockVO> search(StockQueryDTO query) {
+        return stockMapper.search(query).stream()
                 .map(this::convertToVO)
                 .collect(Collectors.toList());
     }
@@ -104,8 +98,12 @@ public class StockServiceImpl implements StockService {
         List<Material> materials = materialMapper.findStockWarning();
         List<Stock> warningStocks = new ArrayList<>();
         for (Material material : materials) {
-            List<Stock> stocks = stockMapper.findByMaterialId(material.getId());
-            warningStocks.addAll(stocks);
+            List<Stock> stocks = stockMapper.search(new StockQueryDTO());
+            for (Stock stock : stocks) {
+                if (stock.getMaterialId().equals(material.getId())) {
+                    warningStocks.add(stock);
+                }
+            }
         }
         return warningStocks.stream()
                 .map(this::convertToVO)

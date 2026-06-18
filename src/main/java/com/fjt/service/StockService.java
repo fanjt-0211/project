@@ -1,5 +1,6 @@
 package com.fjt.service;
 
+import com.fjt.pojo.dto.StockQueryDTO;
 import com.fjt.pojo.entity.Stock;
 import com.fjt.pojo.vo.StockVO;
 
@@ -12,8 +13,7 @@ public interface StockService {
     StockVO findById(Long id);
     Stock findByMaterialAndWarehouse(Long materialId, Long warehouseId);
     List<StockVO> findAll();
-    List<StockVO> findByMaterialId(Long materialId);
-    List<StockVO> findByWarehouseId(Long warehouseId);
+    List<StockVO> search(StockQueryDTO query);
     void updateQuantity(Long materialId, Long warehouseId, Integer quantity);
     void increaseStock(Long materialId, Long warehouseId, Integer quantity);
     void decreaseStock(Long materialId, Long warehouseId, Integer quantity);

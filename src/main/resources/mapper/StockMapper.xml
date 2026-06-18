@@ -26,12 +26,18 @@
         SELECT * FROM stock ORDER BY material_id, warehouse_id
     </select>
 
-    <select id="findByMaterialId" resultType="com.fjt.pojo.entity.Stock">
-        SELECT * FROM stock WHERE material_id=#{materialId} ORDER BY warehouse_id
-    </select>
-
-    <select id="findByWarehouseId" resultType="com.fjt.pojo.entity.Stock">
-        SELECT * FROM stock WHERE warehouse_id=#{warehouseId} ORDER BY material_id
+    <select id="search" resultType="com.fjt.pojo.entity.Stock">
+        SELECT * FROM stock WHERE 1=1
+        <if test="id != null">
+            AND id = #{id}
+        </if>
+        <if test="materialId != null">
+            AND material_id = #{materialId}
+        </if>
+        <if test="warehouseId != null">
+            AND warehouse_id = #{warehouseId}
+        </if>
+        ORDER BY material_id, warehouse_id
     </select>
 
     <update id="updateQuantity">

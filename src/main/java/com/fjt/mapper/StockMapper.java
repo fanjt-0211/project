@@ -1,5 +1,6 @@
 package com.fjt.mapper;
 
+import com.fjt.pojo.dto.StockQueryDTO;
 import com.fjt.pojo.entity.Stock;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -14,8 +15,7 @@ public interface StockMapper {
     Stock findById(Long id);
     Stock findByMaterialAndWarehouse(@Param("materialId") Long materialId, @Param("warehouseId") Long warehouseId);
     List<Stock> findAll();
-    List<Stock> findByMaterialId(Long materialId);
-    List<Stock> findByWarehouseId(Long warehouseId);
+    List<Stock> search(StockQueryDTO query);
     void updateQuantity(@Param("materialId") Long materialId, @Param("warehouseId") Long warehouseId, @Param("quantity") Integer quantity);
     void increaseStock(@Param("materialId") Long materialId, @Param("warehouseId") Long warehouseId, @Param("quantity") Integer quantity);
     void decreaseStock(@Param("materialId") Long materialId, @Param("warehouseId") Long warehouseId, @Param("quantity") Integer quantity);

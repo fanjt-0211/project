@@ -1,8 +1,8 @@
 package com.fjt.mapper;
 
+import com.fjt.pojo.dto.MaterialCategoryQueryDTO;
 import com.fjt.pojo.entity.MaterialCategory;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,6 +13,5 @@ public interface MaterialCategoryMapper {
     void deleteById(Long id);
     MaterialCategory findById(Long id);
     List<MaterialCategory> findAll();
-    List<MaterialCategory> findByParentId(Long parentId);
-    List<MaterialCategory> findByName(@Param("name") String name);
+    List<MaterialCategory> search(MaterialCategoryQueryDTO query);
 }

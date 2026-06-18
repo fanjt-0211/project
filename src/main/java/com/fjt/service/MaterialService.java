@@ -1,6 +1,7 @@
 package com.fjt.service;
 
 import com.fjt.pojo.dto.MaterialDTO;
+import com.fjt.pojo.dto.MaterialQueryDTO;
 import com.fjt.pojo.entity.Material;
 import com.fjt.pojo.vo.MaterialVO;
 
@@ -13,7 +14,6 @@ public interface MaterialService {
     MaterialVO findById(Long id);
     Material findByCode(String code);
     List<MaterialVO> findAll();
-    List<MaterialVO> findByCategoryId(Long categoryId);
-    List<MaterialVO> search(String keyword);
+    List<MaterialVO> search(MaterialQueryDTO query);
     List<MaterialVO> findStockWarning();
 }
