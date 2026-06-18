@@ -27,4 +27,5 @@ public class OutboundVO {
     private Integer status;
     private String statusName;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

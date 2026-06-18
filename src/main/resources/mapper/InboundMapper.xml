@@ -16,6 +16,7 @@
             <if test="supplier != null and supplier != ''">supplier=#{supplier},</if>
             <if test="remark != null">remark=#{remark},</if>
             <if test="status != null">status=#{status},</if>
+            <if test="updatedAt != null">updated_at=#{updatedAt},</if>
         </set>
         WHERE id=#{id}
     </update>

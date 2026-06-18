@@ -20,25 +20,25 @@
     </update>
 
     <update id="deleteById">
-        UPDATE warehouse_user SET is_deleted=1 WHERE id=#{id}
+        UPDATE warehouse_user SET status=0 WHERE id=#{id}
     </update>
 
     <select id="findById" resultType="com.fjt.pojo.entity.User">
-        SELECT * FROM warehouse_user WHERE id=#{id} AND is_deleted=0
+        SELECT * FROM warehouse_user WHERE id=#{id} AND status=1
     </select>
 
     <select id="findByUsername" resultType="com.fjt.pojo.entity.User">
-        SELECT * FROM warehouse_user WHERE username=#{username} AND is_deleted=0
+        SELECT * FROM warehouse_user WHERE username=#{username} AND status=1
     </select>
 
     <select id="findAll" resultType="com.fjt.pojo.entity.User">
-        SELECT * FROM warehouse_user WHERE is_deleted=0 ORDER BY created_at DESC
+        SELECT * FROM warehouse_user WHERE status=1 ORDER BY created_at DESC
     </select>
 
     <select id="search" resultType="com.fjt.pojo.entity.User">
         SELECT * FROM warehouse_user
         <where>
-            is_deleted=0
+            status=1
             <if test="username != null and username != ''">
                 AND username LIKE CONCAT('%', #{username}, '%')
             </if>

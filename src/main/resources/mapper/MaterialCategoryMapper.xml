@@ -20,21 +20,21 @@
     </update>
 
     <update id="deleteById">
-        UPDATE material_category SET is_deleted=1 WHERE id=#{id}
+        UPDATE material_category SET status=0 WHERE id=#{id}
     </update>
 
     <select id="findById" resultType="com.fjt.pojo.entity.MaterialCategory">
-        SELECT * FROM material_category WHERE id=#{id} AND is_deleted=0
+        SELECT * FROM material_category WHERE id=#{id} AND status=1
     </select>
 
     <select id="findAll" resultType="com.fjt.pojo.entity.MaterialCategory">
-        SELECT * FROM material_category WHERE is_deleted=0 ORDER BY sort_order, id
+        SELECT * FROM material_category WHERE status=1 ORDER BY sort_order, id
     </select>
 
     <select id="search" resultType="com.fjt.pojo.entity.MaterialCategory">
         SELECT * FROM material_category
         <where>
-            is_deleted=0
+            status=1
             <if test="name != null and name != ''">
                 AND name LIKE CONCAT('%', #{name}, '%')
             </if>

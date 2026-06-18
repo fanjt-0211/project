@@ -11,7 +11,7 @@ public class MaterialCategory {
     private String description;
     private Long parentId;
     private Integer sortOrder;
-    private Integer isDeleted;
+    private Integer status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

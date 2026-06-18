@@ -17,6 +17,7 @@
             <if test="department != null and department != ''">department=#{department},</if>
             <if test="remark != null">remark=#{remark},</if>
             <if test="status != null">status=#{status},</if>
+            <if test="updatedAt != null">updated_at=#{updatedAt},</if>
         </set>
         WHERE id=#{id}
     </update>

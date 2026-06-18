@@ -14,7 +14,6 @@ public class User {
     private String email;
     private Integer role;
     private Integer status;
-    private Integer isDeleted;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

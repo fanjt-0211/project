@@ -23,7 +23,7 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
     public void add(MaterialCategoryDTO dto) {
         MaterialCategory category = new MaterialCategory();
         BeanUtils.copyProperties(dto, category);
-        category.setIsDeleted(0);
+        category.setStatus(1);
         materialCategoryMapper.insert(category);
     }
 

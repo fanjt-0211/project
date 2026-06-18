@@ -23,7 +23,7 @@ public class WarehouseServiceImpl implements WarehouseService {
     public void add(WarehouseDTO dto) {
         Warehouse warehouse = new Warehouse();
         BeanUtils.copyProperties(dto, warehouse);
-        warehouse.setIsDeleted(0);
+        warehouse.setStatus(1);
         warehouseMapper.insert(warehouse);
     }
 

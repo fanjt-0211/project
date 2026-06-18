@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fjt.mapper.WarehouseMapper">
     <insert id="insert" parameterType="com.fjt.pojo.entity.Warehouse">
-        INSERT INTO warehouse(code, name, location, capacity, description)
-        VALUES(#{code}, #{name}, #{location}, #{capacity}, #{description})
+        INSERT INTO warehouse(code, name, location, capacity, description, status)
+        VALUES(#{code}, #{name}, #{location}, #{capacity}, #{description}, #{status})
     </insert>
 
     <update id="update" parameterType="com.fjt.pojo.entity.Warehouse">
@@ -20,25 +20,30 @@
     </update>
 
     <update id="deleteById">
-        UPDATE warehouse SET is_deleted=1 WHERE id=#{id}
+        UPDATE warehouse SET status=0 WHERE id=#{id}
     </update>
 
     <select id="findById" resultType="com.fjt.pojo.entity.Warehouse">
-        SELECT * FROM warehouse WHERE id=#{id} AND is_deleted=0
+        SELECT * FROM warehouse WHERE id=#{id} AND status=1
     </select>
 
     <select id="findByCode" resultType="com.fjt.pojo.entity.Warehouse">
-        SELECT * FROM warehouse WHERE code=#{code} AND is_deleted=0
+        SELECT * FROM warehouse WHERE code=#{code} AND status=1
     </select>
 
     <select id="findAll" resultType="com.fjt.pojo.entity.Warehouse">
-        SELECT * FROM warehouse WHERE is_deleted=0 ORDER BY code
+        SELECT * FROM warehouse WHERE status=1 ORDER BY code
     </select>
 
     <select id="search" resultType="com.fjt.pojo.entity.Warehouse">
         SELECT * FROM warehouse
         <where>
-            is_deleted=0
+            <if test="status != null">
+                status = #{status}
+            </if>
+            <if test="status == null">
+                status = 1
+            </if>
             <if test="code != null and code != ''">
                 AND code LIKE CONCAT('%', #{code}, '%')
             </if>
@@ -47,9 +52,6 @@
             </if>
             <if test="location != null and location != ''">
                 AND location LIKE CONCAT('%', #{location}, '%')
-            </if>
-            <if test="status != null">
-                AND status = #{status}
             </if>
         </where>
         ORDER BY code

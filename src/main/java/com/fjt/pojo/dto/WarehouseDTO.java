@@ -9,4 +9,5 @@ public class WarehouseDTO {
     private String location;
     private Integer capacity;
     private String description;
+    private Integer status;
 }

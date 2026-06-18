@@ -12,7 +12,7 @@ public class Warehouse {
     private String location;
     private Integer capacity;
     private String description;
-    private Integer isDeleted;
+    private Integer status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

@@ -21,4 +21,5 @@ public class Outbound {
     private String remark;
     private Integer status;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

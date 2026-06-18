@@ -25,25 +25,25 @@
     </update>
 
     <update id="deleteById">
-        UPDATE material SET is_deleted=1 WHERE id=#{id}
+        UPDATE material SET status=0 WHERE id=#{id}
     </update>
 
     <select id="findById" resultType="com.fjt.pojo.entity.Material">
-        SELECT * FROM material WHERE id=#{id} AND is_deleted=0
+        SELECT * FROM material WHERE id=#{id} AND status=1
     </select>
 
     <select id="findByCode" resultType="com.fjt.pojo.entity.Material">
-        SELECT * FROM material WHERE code=#{code} AND is_deleted=0
+        SELECT * FROM material WHERE code=#{code} AND status=1
     </select>
 
     <select id="findAll" resultType="com.fjt.pojo.entity.Material">
-        SELECT * FROM material WHERE is_deleted=0 ORDER BY created_at DESC
+        SELECT * FROM material WHERE status=1 ORDER BY created_at DESC
     </select>
 
     <select id="search" resultType="com.fjt.pojo.entity.Material">
         SELECT * FROM material
         <where>
-            is_deleted=0
+            status=1
             <if test="code != null and code != ''">
                 AND code LIKE CONCAT('%', #{code}, '%')
             </if>
@@ -66,7 +66,7 @@
     <select id="findStockWarning" resultType="com.fjt.pojo.entity.Material">
         SELECT m.* FROM material m 
         LEFT JOIN stock s ON m.id = s.material_id
-        WHERE m.is_deleted=0
+        WHERE m.status=0
         GROUP BY m.id
         HAVING COALESCE(SUM(s.quantity), 0) &lt; m.min_stock
     </select>

@@ -28,7 +28,7 @@ public class MaterialServiceImpl implements MaterialService {
     public void add(MaterialDTO dto) {
         Material material = new Material();
         BeanUtils.copyProperties(dto, material);
-        material.setIsDeleted(0);
+        material.setStatus(1);
         materialMapper.insert(material);
     }
 

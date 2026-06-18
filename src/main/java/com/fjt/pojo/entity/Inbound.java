@@ -20,4 +20,5 @@ public class Inbound {
     private String remark;
     private Integer status;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }
