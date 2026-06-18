@@ -1,15 +1,17 @@
 package com.fjt.service;
 
-import com.fjt.pojo.MaterialCategory;
+import com.fjt.pojo.dto.MaterialCategoryDTO;
+import com.fjt.pojo.entity.MaterialCategory;
+import com.fjt.pojo.vo.MaterialCategoryVO;
 
 import java.util.List;
 
 public interface MaterialCategoryService {
-    void add(MaterialCategory category);
-    void update(MaterialCategory category);
+    void add(MaterialCategoryDTO dto);
+    void update(MaterialCategoryDTO dto, Long id);
     void delete(Long id);
-    MaterialCategory findById(Long id);
-    List<MaterialCategory> findAll();
-    List<MaterialCategory> findByParentId(Long parentId);
-    List<MaterialCategory> findByName(String name);
+    MaterialCategoryVO findById(Long id);
+    List<MaterialCategoryVO> findAll();
+    List<MaterialCategoryVO> findByParentId(Long parentId);
+    List<MaterialCategoryVO> findByName(String name);
 }

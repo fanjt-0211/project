@@ -1,17 +1,19 @@
 package com.fjt.service;
 
-import com.fjt.pojo.Material;
+import com.fjt.pojo.dto.MaterialDTO;
+import com.fjt.pojo.entity.Material;
+import com.fjt.pojo.vo.MaterialVO;
 
 import java.util.List;
 
 public interface MaterialService {
-    void add(Material material);
-    void update(Material material);
+    void add(MaterialDTO dto);
+    void update(MaterialDTO dto, Long id);
     void delete(Long id);
-    Material findById(Long id);
+    MaterialVO findById(Long id);
     Material findByCode(String code);
-    List<Material> findAll();
-    List<Material> findByCategoryId(Long categoryId);
-    List<Material> search(String keyword);
-    List<Material> findStockWarning();
+    List<MaterialVO> findAll();
+    List<MaterialVO> findByCategoryId(Long categoryId);
+    List<MaterialVO> search(String keyword);
+    List<MaterialVO> findStockWarning();
 }

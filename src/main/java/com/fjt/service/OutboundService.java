@@ -1,19 +1,21 @@
 package com.fjt.service;
 
-import com.fjt.pojo.Outbound;
+import com.fjt.pojo.dto.OutboundDTO;
+import com.fjt.pojo.entity.Outbound;
+import com.fjt.pojo.vo.OutboundVO;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public interface OutboundService {
-    void add(Outbound outbound);
+    void add(OutboundDTO dto);
     void update(Outbound outbound);
-    Outbound findById(Long id);
-    Outbound findByOutboundNo(String outboundNo);
-    List<Outbound> findAll();
-    List<Outbound> findByType(Integer type);
-    List<Outbound> findByMaterialId(Long materialId);
-    List<Outbound> findByWarehouseId(Long warehouseId);
-    List<Outbound> findByTimeRange(LocalDateTime startTime, LocalDateTime endTime);
-    List<Outbound> findByOperatorId(Long operatorId);
+    OutboundVO findById(Long id);
+    OutboundVO findByOutboundNo(String outboundNo);
+    List<OutboundVO> findAll();
+    List<OutboundVO> findByType(Integer type);
+    List<OutboundVO> findByMaterialId(Long materialId);
+    List<OutboundVO> findByWarehouseId(Long warehouseId);
+    List<OutboundVO> findByTimeRange(LocalDateTime startTime, LocalDateTime endTime);
+    List<OutboundVO> findByOperatorId(Long operatorId);
 }

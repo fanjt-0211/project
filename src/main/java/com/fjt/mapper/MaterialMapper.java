@@ -1,6 +1,6 @@
 package com.fjt.mapper;
 
-import com.fjt.pojo.Material;
+import com.fjt.pojo.entity.Material;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

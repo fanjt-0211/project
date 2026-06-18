@@ -1,7 +1,8 @@
 package com.fjt.controller;
 
-import com.fjt.pojo.Material;
+import com.fjt.pojo.dto.MaterialDTO;
 import com.fjt.pojo.Result;
+import com.fjt.pojo.vo.MaterialVO;
 import com.fjt.service.MaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,39 +17,39 @@ public class MaterialController {
     private MaterialService materialService;
 
     @GetMapping
-    public Result<List<Material>> list() {
+    public Result<List<MaterialVO>> list() {
         return Result.success(materialService.findAll());
     }
 
     @GetMapping("/{id}")
-    public Result<Material> getById(@PathVariable Long id) {
+    public Result<MaterialVO> getById(@PathVariable Long id) {
         return Result.success(materialService.findById(id));
     }
 
     @GetMapping("/category/{categoryId}")
-    public Result<List<Material>> getByCategoryId(@PathVariable Long categoryId) {
+    public Result<List<MaterialVO>> getByCategoryId(@PathVariable Long categoryId) {
         return Result.success(materialService.findByCategoryId(categoryId));
     }
 
     @GetMapping("/search")
-    public Result<List<Material>> search(@RequestParam String keyword) {
+    public Result<List<MaterialVO>> search(@RequestParam String keyword) {
         return Result.success(materialService.search(keyword));
     }
 
     @GetMapping("/warning")
-    public Result<List<Material>> getStockWarning() {
+    public Result<List<MaterialVO>> getStockWarning() {
         return Result.success(materialService.findStockWarning());
     }
 
     @PostMapping
-    public Result<Void> add(@RequestBody Material material) {
-        materialService.add(material);
+    public Result<Void> add(@RequestBody MaterialDTO dto) {
+        materialService.add(dto);
         return Result.success();
     }
 
-    @PutMapping
-    public Result<Void> update(@RequestBody Material material) {
-        materialService.update(material);
+    @PutMapping("/{id}")
+    public Result<Void> update(@RequestBody MaterialDTO dto, @PathVariable Long id) {
+        materialService.update(dto, id);
         return Result.success();
     }
 

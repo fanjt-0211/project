@@ -1,17 +1,16 @@
-package com.fjt.pojo;
+package com.fjt.pojo.entity;
 
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
-public class Warehouse {
+public class MaterialCategory {
     private Long id;
-    private String code;
     private String name;
-    private String location;
-    private Integer capacity;
     private String description;
+    private Long parentId;
+    private Integer sortOrder;
     private Integer isDeleted;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

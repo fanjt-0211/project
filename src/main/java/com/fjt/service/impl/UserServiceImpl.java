@@ -1,12 +1,16 @@
 package com.fjt.service.impl;
 
 import com.fjt.mapper.UserMapper;
-import com.fjt.pojo.User;
+import com.fjt.pojo.dto.LoginDTO;
+import com.fjt.pojo.entity.User;
+import com.fjt.pojo.vo.UserVO;
 import com.fjt.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -15,10 +19,10 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public User login(String username, String password) {
-        User user = userMapper.findByUsername(username);
-        if (user != null && password.equals(user.getPassword())) {
-            return user;
+    public UserVO login(LoginDTO loginDTO) {
+        User user = userMapper.findByUsername(loginDTO.getUsername());
+        if (user != null && loginDTO.getPassword().equals(user.getPassword())) {
+            return convertToVO(user);
         }
         return null;
     }
@@ -39,8 +43,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(Long id) {
-        return userMapper.findById(id);
+    public UserVO findById(Long id) {
+        User user = userMapper.findById(id);
+        return user != null ? convertToVO(user) : null;
     }
 
     @Override
@@ -49,7 +54,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAll() {
-        return userMapper.findAll();
+    public List<UserVO> findAll() {
+        return userMapper.findAll().stream()
+                .map(this::convertToVO)
+                .collect(Collectors.toList());
+    }
+
+    private UserVO convertToVO(User user) {
+        UserVO vo = new UserVO();
+        BeanUtils.copyProperties(user, vo);
+        vo.setRoleName(user.getRole() == 1 ? "管理员" : "普通用户");
+        return vo;
     }
 }

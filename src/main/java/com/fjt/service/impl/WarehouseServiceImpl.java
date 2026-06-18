@@ -1,8 +1,10 @@
 package com.fjt.service.impl;
 
 import com.fjt.mapper.WarehouseMapper;
-import com.fjt.pojo.Warehouse;
+import com.fjt.pojo.dto.WarehouseDTO;
+import com.fjt.pojo.entity.Warehouse;
 import com.fjt.service.WarehouseService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +17,18 @@ public class WarehouseServiceImpl implements WarehouseService {
     private WarehouseMapper warehouseMapper;
 
     @Override
-    public void add(Warehouse warehouse) {
+    public void add(WarehouseDTO dto) {
+        Warehouse warehouse = new Warehouse();
+        BeanUtils.copyProperties(dto, warehouse);
+        warehouse.setIsDeleted(0);
         warehouseMapper.insert(warehouse);
     }
 
     @Override
-    public void update(Warehouse warehouse) {
+    public void update(WarehouseDTO dto, Long id) {
+        Warehouse warehouse = new Warehouse();
+        BeanUtils.copyProperties(dto, warehouse);
+        warehouse.setId(id);
         warehouseMapper.update(warehouse);
     }
 

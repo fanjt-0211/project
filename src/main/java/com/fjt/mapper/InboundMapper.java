@@ -1,6 +1,6 @@
 package com.fjt.mapper;
 
-import com.fjt.pojo.Inbound;
+import com.fjt.pojo.entity.Inbound;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

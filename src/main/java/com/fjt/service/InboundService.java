@@ -1,19 +1,21 @@
 package com.fjt.service;
 
-import com.fjt.pojo.Inbound;
+import com.fjt.pojo.dto.InboundDTO;
+import com.fjt.pojo.entity.Inbound;
+import com.fjt.pojo.vo.InboundVO;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public interface InboundService {
-    void add(Inbound inbound);
+    void add(InboundDTO dto);
     void update(Inbound inbound);
-    Inbound findById(Long id);
-    Inbound findByInboundNo(String inboundNo);
-    List<Inbound> findAll();
-    List<Inbound> findByType(Integer type);
-    List<Inbound> findByMaterialId(Long materialId);
-    List<Inbound> findByWarehouseId(Long warehouseId);
-    List<Inbound> findByTimeRange(LocalDateTime startTime, LocalDateTime endTime);
-    List<Inbound> findByOperatorId(Long operatorId);
+    InboundVO findById(Long id);
+    InboundVO findByInboundNo(String inboundNo);
+    List<InboundVO> findAll();
+    List<InboundVO> findByType(Integer type);
+    List<InboundVO> findByMaterialId(Long materialId);
+    List<InboundVO> findByWarehouseId(Long warehouseId);
+    List<InboundVO> findByTimeRange(LocalDateTime startTime, LocalDateTime endTime);
+    List<InboundVO> findByOperatorId(Long operatorId);
 }

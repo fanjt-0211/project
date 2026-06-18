@@ -1,7 +1,7 @@
 package com.fjt.controller;
 
 import com.fjt.pojo.Result;
-import com.fjt.pojo.Stock;
+import com.fjt.pojo.vo.StockVO;
 import com.fjt.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,40 +16,28 @@ public class StockController {
     private StockService stockService;
 
     @GetMapping
-    public Result<List<Stock>> list() {
+    public Result<List<StockVO>> list() {
         return Result.success(stockService.findAll());
     }
 
     @GetMapping("/{id}")
-    public Result<Stock> getById(@PathVariable Long id) {
+    public Result<StockVO> getById(@PathVariable Long id) {
         return Result.success(stockService.findById(id));
     }
 
     @GetMapping("/material/{materialId}")
-    public Result<List<Stock>> getByMaterialId(@PathVariable Long materialId) {
+    public Result<List<StockVO>> getByMaterialId(@PathVariable Long materialId) {
         return Result.success(stockService.findByMaterialId(materialId));
     }
 
     @GetMapping("/warehouse/{warehouseId}")
-    public Result<List<Stock>> getByWarehouseId(@PathVariable Long warehouseId) {
+    public Result<List<StockVO>> getByWarehouseId(@PathVariable Long warehouseId) {
         return Result.success(stockService.findByWarehouseId(warehouseId));
     }
 
     @GetMapping("/warning")
-    public Result<List<Stock>> getStockWarning() {
+    public Result<List<StockVO>> getStockWarning() {
         return Result.success(stockService.findStockWarning());
-    }
-
-    @PostMapping
-    public Result<Void> add(@RequestBody Stock stock) {
-        stockService.add(stock);
-        return Result.success();
-    }
-
-    @PutMapping
-    public Result<Void> update(@RequestBody Stock stock) {
-        stockService.update(stock);
-        return Result.success();
     }
 
     @DeleteMapping("/{id}")

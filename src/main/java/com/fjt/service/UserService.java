@@ -1,15 +1,17 @@
 package com.fjt.service;
 
-import com.fjt.pojo.User;
+import com.fjt.pojo.dto.LoginDTO;
+import com.fjt.pojo.entity.User;
+import com.fjt.pojo.vo.UserVO;
 
 import java.util.List;
 
 public interface UserService {
-    User login(String username, String password);
+    UserVO login(LoginDTO loginDTO);
     void add(User user);
     void update(User user);
     void delete(Long id);
-    User findById(Long id);
+    UserVO findById(Long id);
     User findByUsername(String username);
-    List<User> findAll();
+    List<UserVO> findAll();
 }

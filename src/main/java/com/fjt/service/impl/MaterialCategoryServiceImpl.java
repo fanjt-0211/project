@@ -1,12 +1,16 @@
 package com.fjt.service.impl;
 
 import com.fjt.mapper.MaterialCategoryMapper;
-import com.fjt.pojo.MaterialCategory;
+import com.fjt.pojo.dto.MaterialCategoryDTO;
+import com.fjt.pojo.entity.MaterialCategory;
+import com.fjt.pojo.vo.MaterialCategoryVO;
 import com.fjt.service.MaterialCategoryService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MaterialCategoryServiceImpl implements MaterialCategoryService {
@@ -15,12 +19,18 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
     private MaterialCategoryMapper materialCategoryMapper;
 
     @Override
-    public void add(MaterialCategory category) {
+    public void add(MaterialCategoryDTO dto) {
+        MaterialCategory category = new MaterialCategory();
+        BeanUtils.copyProperties(dto, category);
+        category.setIsDeleted(0);
         materialCategoryMapper.insert(category);
     }
 
     @Override
-    public void update(MaterialCategory category) {
+    public void update(MaterialCategoryDTO dto, Long id) {
+        MaterialCategory category = new MaterialCategory();
+        BeanUtils.copyProperties(dto, category);
+        category.setId(id);
         materialCategoryMapper.update(category);
     }
 
@@ -30,22 +40,41 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
     }
 
     @Override
-    public MaterialCategory findById(Long id) {
-        return materialCategoryMapper.findById(id);
+    public MaterialCategoryVO findById(Long id) {
+        MaterialCategory category = materialCategoryMapper.findById(id);
+        return category != null ? convertToVO(category) : null;
     }
 
     @Override
-    public List<MaterialCategory> findAll() {
-        return materialCategoryMapper.findAll();
+    public List<MaterialCategoryVO> findAll() {
+        return materialCategoryMapper.findAll().stream()
+                .map(this::convertToVO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<MaterialCategory> findByParentId(Long parentId) {
-        return materialCategoryMapper.findByParentId(parentId);
+    public List<MaterialCategoryVO> findByParentId(Long parentId) {
+        return materialCategoryMapper.findByParentId(parentId).stream()
+                .map(this::convertToVO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<MaterialCategory> findByName(String name) {
-        return materialCategoryMapper.findByName(name);
+    public List<MaterialCategoryVO> findByName(String name) {
+        return materialCategoryMapper.findByName(name).stream()
+                .map(this::convertToVO)
+                .collect(Collectors.toList());
+    }
+
+    private MaterialCategoryVO convertToVO(MaterialCategory category) {
+        MaterialCategoryVO vo = new MaterialCategoryVO();
+        BeanUtils.copyProperties(category, vo);
+        if (category.getParentId() != null) {
+            MaterialCategory parent = materialCategoryMapper.findById(category.getParentId());
+            if (parent != null) {
+                vo.setParentName(parent.getName());
+            }
+        }
+        return vo;
     }
 }

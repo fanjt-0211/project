@@ -1,4 +1,4 @@
-package com.fjt.pojo;
+package com.fjt.pojo.entity;
 
 import lombok.Data;
 

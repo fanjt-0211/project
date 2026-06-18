@@ -1,6 +1,6 @@
 package com.fjt.mapper;
 
-import com.fjt.pojo.User;
+import com.fjt.pojo.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

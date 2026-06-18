@@ -1,7 +1,8 @@
 package com.fjt.controller;
 
+import com.fjt.pojo.dto.WarehouseDTO;
 import com.fjt.pojo.Result;
-import com.fjt.pojo.Warehouse;
+import com.fjt.pojo.entity.Warehouse;
 import com.fjt.service.WarehouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,14 +27,14 @@ public class WarehouseController {
     }
 
     @PostMapping
-    public Result<Void> add(@RequestBody Warehouse warehouse) {
-        warehouseService.add(warehouse);
+    public Result<Void> add(@RequestBody WarehouseDTO dto) {
+        warehouseService.add(dto);
         return Result.success();
     }
 
-    @PutMapping
-    public Result<Void> update(@RequestBody Warehouse warehouse) {
-        warehouseService.update(warehouse);
+    @PutMapping("/{id}")
+    public Result<Void> update(@RequestBody WarehouseDTO dto, @PathVariable Long id) {
+        warehouseService.update(dto, id);
         return Result.success();
     }
 

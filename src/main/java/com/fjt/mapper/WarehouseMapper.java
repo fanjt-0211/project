@@ -1,6 +1,6 @@
 package com.fjt.mapper;
 
-import com.fjt.pojo.Warehouse;
+import com.fjt.pojo.entity.Warehouse;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

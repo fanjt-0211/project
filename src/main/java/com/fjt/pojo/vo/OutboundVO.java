@@ -1,0 +1,30 @@
+package com.fjt.pojo.vo;
+
+import lombok.Data;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+@Data
+public class OutboundVO {
+    private Long id;
+    private String outboundNo;
+    private Integer type;
+    private String typeName;
+    private Long materialId;
+    private String materialName;
+    private String specification;
+    private Long warehouseId;
+    private String warehouseName;
+    private Integer quantity;
+    private BigDecimal unitPrice;
+    private BigDecimal totalAmount;
+    private String recipient;
+    private String department;
+    private Long operatorId;
+    private String operatorName;
+    private String remark;
+    private Integer status;
+    private String statusName;
+    private LocalDateTime createdAt;
+}
