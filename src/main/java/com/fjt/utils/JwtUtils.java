@@ -1,52 +1,30 @@
 package com.fjt.utils;
 
-import com.fjt.config.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.Map;
 
-@Component
 public class JwtUtils {
 
-    @Autowired
-    private JwtProperties jwtProperties;
+    public static String createJWT(String secretKey, long ttlMillis, Map<String, Object> claims) {
+        long expMillis = System.currentTimeMillis() + ttlMillis;
+        Date exp = new Date(expMillis);
 
-    private SecretKey getSigningKey() {
-        byte[] keyBytes = jwtProperties.getAdminSecretKey().getBytes(StandardCharsets.UTF_8);
-        return Keys.hmacShaKeyFor(keyBytes);
-    }
-
-    public String generateToken(Long userId, String username) {
         return Jwts.builder()
-                .subject(String.valueOf(userId))
-                .claim("username", username)
-                .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + jwtProperties.getAdminTtl()))
-                .signWith(getSigningKey())
+                .claims(claims)
+                .expiration(exp)
+                .signWith(Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8)))
                 .compact();
     }
 
-    public Claims parseToken(String token) {
+    public static Claims parseJWT(String secretKey, String token) {
         return Jwts.parser()
-                .verifyWith(getSigningKey())
+                .verifyWith(Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8)))
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-    }
-
-    public Long getUserId(String token) {
-        Claims claims = parseToken(token);
-        return Long.parseLong(claims.getSubject());
-    }
-
-    public String getUsername(String token) {
-        Claims claims = parseToken(token);
-        return claims.get("username", String.class);
     }
 }

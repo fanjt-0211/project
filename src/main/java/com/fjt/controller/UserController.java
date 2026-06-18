@@ -1,5 +1,6 @@
 package com.fjt.controller;
 
+import com.fjt.config.JwtProperties;
 import com.fjt.pojo.dto.LoginDTO;
 import com.fjt.pojo.dto.UserQueryDTO;
 import com.fjt.pojo.entity.User;
@@ -22,61 +23,42 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private JwtUtils jwtUtils;
+    private JwtProperties jwtProperties;
 
-    /**
-     * 用户登录
-     */
     @PostMapping("/login")
-    public Result<Map<String, Object>> login(@RequestBody LoginDTO loginDTO) {
+    public Result<String> login(@RequestBody LoginDTO loginDTO) {
         UserVO userVO = userService.login(loginDTO);
         if (userVO != null) {
-            String token = jwtUtils.generateToken(userVO.getId(), userVO.getUsername());
-            Map<String, Object> data = new HashMap<>();
-            data.put("token", token);
-            data.put("user", userVO);
-            return Result.success(data);
+            Map<String, Object> claims = new HashMap<>();
+            claims.put("id", userVO.getId());
+            claims.put("username", userVO.getUsername());
+            String token = JwtUtils.createJWT(jwtProperties.getAdminSecretKey(), jwtProperties.getAdminTtl(), claims);
+            return Result.success(token);
         }
         return Result.error("用户名或密码错误");
     }
 
-    /**
-     * 查询所有用户
-     */
     @GetMapping
     public Result<List<UserVO>> list() {
         return Result.success(userService.findAll());
     }
 
-    /**
-     * 根据id查询用户
-     */
     @GetMapping("/{id}")
     public Result<UserVO> getById(@PathVariable Long id) {
         return Result.success(userService.findById(id));
     }
 
-    /**
-     * 通用查询接口 - 支持多条件模糊查询
-     * 参数可为空，为空则查询所有
-     */
     @GetMapping("/search")
     public Result<List<UserVO>> search(UserQueryDTO query) {
         return Result.success(userService.search(query));
     }
 
-    /**
-     * 添加用户
-     */
     @PostMapping
     public Result<Void> add(@RequestBody User user) {
         userService.add(user);
         return Result.success();
     }
 
-    /**
-     * 修改用户
-     */
     @PutMapping("/{id}")
     public Result<Void> update(@RequestBody User user, @PathVariable Long id) {
         user.setId(id);
@@ -84,9 +66,6 @@ public class UserController {
         return Result.success();
     }
 
-    /**
-     * 删除用户
-     */
     @DeleteMapping("/{id}")
     public Result<Void> delete(@PathVariable Long id) {
         userService.delete(id);

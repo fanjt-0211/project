@@ -29,6 +29,6 @@ logging:
 
 fjt:
   jwt:
-    admin-secret-key: fjt
+    admin-secret-key: fjt20050211.jwt.warehouse.management.system.secret.key
     admin-ttl: 7200000
     admin-token-name: token

@@ -18,9 +18,6 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
     @Autowired
     private JwtProperties jwtProperties;
 
-    @Autowired
-    private JwtUtils jwtUtils;
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = request.getHeader(jwtProperties.getAdminTokenName());
@@ -33,12 +30,8 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
             return false;
         }
         
-        if (token.startsWith("Bearer ")) {
-            token = token.substring(7);
-        }
-        
         try {
-            jwtUtils.parseToken(token);
+            JwtUtils.parseJWT(jwtProperties.getAdminSecretKey(), token);
             return true;
         } catch (Exception e) {
             response.setContentType("application/json");
