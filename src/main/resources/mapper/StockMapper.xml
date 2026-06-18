@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fjt.mapper.StockMapper">
-    <insert id="insert" parameterType="com.fjt.pojo.Stock">
+    <insert id="insert" parameterType="com.fjt.pojo.entity.Stock">
         INSERT INTO stock(material_id, warehouse_id, quantity)
         VALUES(#{materialId}, #{warehouseId}, #{quantity})
     </insert>
 
-    <update id="update" parameterType="com.fjt.pojo.Stock">
+    <update id="update" parameterType="com.fjt.pojo.entity.Stock">
         UPDATE stock SET quantity=#{quantity} WHERE id=#{id}
     </update>
 
@@ -14,23 +14,23 @@
         DELETE FROM stock WHERE id=#{id}
     </delete>
 
-    <select id="findById" resultType="com.fjt.pojo.Stock">
+    <select id="findById" resultType="com.fjt.pojo.entity.Stock">
         SELECT * FROM stock WHERE id=#{id}
     </select>
 
-    <select id="findByMaterialAndWarehouse" resultType="com.fjt.pojo.Stock">
+    <select id="findByMaterialAndWarehouse" resultType="com.fjt.pojo.entity.Stock">
         SELECT * FROM stock WHERE material_id=#{materialId} AND warehouse_id=#{warehouseId}
     </select>
 
-    <select id="findAll" resultType="com.fjt.pojo.Stock">
+    <select id="findAll" resultType="com.fjt.pojo.entity.Stock">
         SELECT * FROM stock ORDER BY material_id, warehouse_id
     </select>
 
-    <select id="findByMaterialId" resultType="com.fjt.pojo.Stock">
+    <select id="findByMaterialId" resultType="com.fjt.pojo.entity.Stock">
         SELECT * FROM stock WHERE material_id=#{materialId} ORDER BY warehouse_id
     </select>
 
-    <select id="findByWarehouseId" resultType="com.fjt.pojo.Stock">
+    <select id="findByWarehouseId" resultType="com.fjt.pojo.entity.Stock">
         SELECT * FROM stock WHERE warehouse_id=#{warehouseId} ORDER BY material_id
     </select>
 

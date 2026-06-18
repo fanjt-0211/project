@@ -5,6 +5,7 @@ import com.fjt.pojo.dto.LoginDTO;
 import com.fjt.pojo.entity.User;
 import com.fjt.pojo.vo.UserVO;
 import com.fjt.service.UserService;
+import com.fjt.utils.MD5Utils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserVO login(LoginDTO loginDTO) {
         User user = userMapper.findByUsername(loginDTO.getUsername());
-        if (user != null && loginDTO.getPassword().equals(user.getPassword())) {
+        if (user != null && MD5Utils.encrypt(loginDTO.getPassword()).equals(user.getPassword())) {
             return convertToVO(user);
         }
         return null;

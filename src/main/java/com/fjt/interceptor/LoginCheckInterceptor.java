@@ -25,6 +25,10 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
             return false;
         }
         
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+        
         try {
             JwtUtils.parseToken(token);
             return true;
