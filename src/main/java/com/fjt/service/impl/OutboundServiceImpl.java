@@ -4,6 +4,7 @@ import com.fjt.mapper.MaterialMapper;
 import com.fjt.mapper.OutboundMapper;
 import com.fjt.mapper.UserMapper;
 import com.fjt.mapper.WarehouseMapper;
+import com.fjt.pojo.PageBean;
 import com.fjt.pojo.dto.OutboundDTO;
 import com.fjt.pojo.dto.OutboundQueryDTO;
 import com.fjt.pojo.entity.Material;
@@ -14,6 +15,8 @@ import com.fjt.pojo.entity.Warehouse;
 import com.fjt.pojo.vo.OutboundVO;
 import com.fjt.service.OutboundService;
 import com.fjt.service.StockService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -88,18 +91,20 @@ public class OutboundServiceImpl implements OutboundService {
         return outbound != null ? convertToVO(outbound) : null;
     }
 
+    /**
+     * 通用查询接口 - 支持多条件分页查询
+     * 参数可为空，为空则查询所有
+     */
     @Override
-    public List<OutboundVO> findAll() {
-        return outboundMapper.findAll().stream()
+    public PageBean<OutboundVO> list(OutboundQueryDTO query) {
+        PageHelper.startPage(query.getPageNum(), query.getPageSize());
+        List<Outbound> list = outboundMapper.search(query);
+        Page<Outbound> pageResult = (Page<Outbound>) list;
+        long total = pageResult.getTotal();
+        List<OutboundVO> records = pageResult.getResult().stream()
                 .map(this::convertToVO)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<OutboundVO> search(OutboundQueryDTO query) {
-        return outboundMapper.search(query).stream()
-                .map(this::convertToVO)
-                .collect(Collectors.toList());
+        return new PageBean<>(total, records);
     }
 
     private String generateOutboundNo() {

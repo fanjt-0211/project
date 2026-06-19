@@ -41,20 +41,14 @@ public class WarehouseServiceImpl implements WarehouseService {
     }
 
     @Override
-    public Warehouse findById(Long id) {
-        return warehouseMapper.findById(id);
+    public WarehouseVO findById(Long id) {
+        Warehouse warehouse = warehouseMapper.findById(id);
+        return warehouse != null ? convertToVO(warehouse) : null;
     }
 
     @Override
     public Warehouse findByCode(String code) {
         return warehouseMapper.findByCode(code);
-    }
-
-    @Override
-    public List<WarehouseVO> findAll() {
-        return warehouseMapper.findAll().stream()
-                .map(this::convertToVO)
-                .collect(Collectors.toList());
     }
 
     @Override

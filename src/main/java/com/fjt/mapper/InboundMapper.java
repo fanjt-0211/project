@@ -29,11 +29,6 @@ public interface InboundMapper {
     Inbound findByInboundNo(String inboundNo);
 
     /**
-     * 查询所有入库单
-     */
-    List<Inbound> findAll();
-
-    /**
      * 通用查询接口 - 支持多条件模糊查询
      *
      * 参数可为空，为空则查询所有

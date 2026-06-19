@@ -12,6 +12,5 @@ public interface MaterialCategoryMapper {
     void update(MaterialCategory category);
     void deleteById(Long id);
     MaterialCategory findById(Long id);
-    List<MaterialCategory> findAll();
     List<MaterialCategory> search(MaterialCategoryQueryDTO query);
 }

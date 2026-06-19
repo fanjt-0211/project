@@ -47,13 +47,6 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
     }
 
     @Override
-    public List<MaterialCategoryVO> findAll() {
-        return materialCategoryMapper.findAll().stream()
-                .map(this::convertToVO)
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public List<MaterialCategoryVO> search(MaterialCategoryQueryDTO query) {
         return materialCategoryMapper.search(query).stream()
                 .map(this::convertToVO)

@@ -4,7 +4,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class InboundQueryDTO {
+public class InboundQueryDTO extends PageQueryDTO {
     private Long id;
     private String inboundNo;
     private Integer type;

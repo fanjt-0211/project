@@ -13,6 +13,5 @@ public interface UserMapper {
     void deleteById(Long id);
     User findById(Long id);
     User findByUsername(String username);
-    List<User> findAll();
     List<User> search(UserQueryDTO query);
 }

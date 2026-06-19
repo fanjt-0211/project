@@ -1,18 +1,15 @@
 package com.fjt.pojo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PageBean<T> {
-    private Integer total;
+    private long total;
     private List<T> records;
-
-    public PageBean() {}
-
-    public PageBean(Integer total, List<T> records) {
-        this.total = total;
-        this.records = records;
-    }
 }

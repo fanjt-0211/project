@@ -5,6 +5,7 @@ import com.fjt.pojo.dto.InboundQueryDTO;
 import com.fjt.pojo.entity.Inbound;
 import com.fjt.pojo.vo.InboundVO;
 
+import com.fjt.pojo.PageBean;
 import java.util.List;
 
 public interface InboundService {
@@ -12,6 +13,5 @@ public interface InboundService {
     void update(Inbound inbound);
     InboundVO findById(Long id);
     InboundVO findByInboundNo(String inboundNo);
-    List<InboundVO> findAll();
-    List<InboundVO> search(InboundQueryDTO query);
+    PageBean<InboundVO> list(InboundQueryDTO query);
 }

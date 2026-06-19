@@ -1,5 +1,6 @@
 package com.fjt.controller;
 
+import com.fjt.pojo.PageBean;
 import com.fjt.pojo.dto.StockQueryDTO;
 import com.fjt.pojo.Result;
 import com.fjt.pojo.vo.StockVO;
@@ -17,11 +18,11 @@ public class StockController {
     private StockService stockService;
 
     /**
-     * 查询所有库存
+     * 分页查询库存 - 支持动态条件查询
      */
     @GetMapping
-    public Result<List<StockVO>> list() {
-        return Result.success(stockService.findAll());
+    public Result<PageBean<StockVO>> list(StockQueryDTO query) {
+        return Result.success(stockService.list(query));
     }
 
     /**
@@ -30,15 +31,6 @@ public class StockController {
     @GetMapping("/{id}")
     public Result<StockVO> getById(@PathVariable Long id) {
         return Result.success(stockService.findById(id));
-    }
-
-    /**
-     * 通用查询接口 - 支持多条件查询
-     * 参数可为空，为空则查询所有
-     */
-    @GetMapping("/search")
-    public Result<List<StockVO>> search(StockQueryDTO query) {
-        return Result.success(stockService.search(query));
     }
 
     /**

@@ -13,6 +13,5 @@ public interface WarehouseMapper {
     void deleteById(Long id);
     Warehouse findById(Long id);
     Warehouse findByCode(String code);
-    List<Warehouse> findAll();
     List<Warehouse> search(WarehouseQueryDTO query);
 }

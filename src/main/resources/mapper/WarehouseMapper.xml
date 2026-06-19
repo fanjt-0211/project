@@ -31,10 +31,6 @@
         SELECT * FROM warehouse WHERE code=#{code} AND status=1
     </select>
 
-    <select id="findAll" resultType="com.fjt.pojo.entity.Warehouse">
-        SELECT * FROM warehouse WHERE status=1 ORDER BY code
-    </select>
-
     <select id="search" resultType="com.fjt.pojo.entity.Warehouse">
         SELECT * FROM warehouse
         <where>

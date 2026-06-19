@@ -1,5 +1,6 @@
 package com.fjt.controller;
 
+import com.fjt.annotation.RequireAdmin;
 import com.fjt.config.JwtProperties;
 import com.fjt.pojo.dto.LoginDTO;
 import com.fjt.pojo.dto.UserQueryDTO;
@@ -39,8 +40,8 @@ public class UserController {
     }
 
     @GetMapping
-    public Result<List<UserVO>> list() {
-        return Result.success(userService.findAll());
+    public Result<List<UserVO>> list(UserQueryDTO query) {
+        return Result.success(userService.search(query));
     }
 
     @GetMapping("/{id}")
@@ -48,17 +49,14 @@ public class UserController {
         return Result.success(userService.findById(id));
     }
 
-    @GetMapping("/search")
-    public Result<List<UserVO>> search(UserQueryDTO query) {
-        return Result.success(userService.search(query));
-    }
-
+    @RequireAdmin
     @PostMapping
     public Result<Void> add(@RequestBody User user) {
         userService.add(user);
         return Result.success();
     }
 
+    @RequireAdmin
     @PutMapping("/{id}")
     public Result<Void> update(@RequestBody User user, @PathVariable Long id) {
         user.setId(id);
@@ -66,6 +64,7 @@ public class UserController {
         return Result.success();
     }
 
+    @RequireAdmin
     @DeleteMapping("/{id}")
     public Result<Void> delete(@PathVariable Long id) {
         userService.delete(id);

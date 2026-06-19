@@ -13,6 +13,9 @@ import com.fjt.pojo.entity.Warehouse;
 import com.fjt.pojo.vo.InboundVO;
 import com.fjt.service.InboundService;
 import com.fjt.service.StockService;
+import com.fjt.pojo.PageBean;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,18 +85,19 @@ public class InboundServiceImpl implements InboundService {
         return inbound != null ? convertToVO(inbound) : null;
     }
 
+    /**
+     * 通用查询接口 - 支持多条件分页查询
+     */
     @Override
-    public List<InboundVO> findAll() {
-        return inboundMapper.findAll().stream()
+    public PageBean<InboundVO> list(InboundQueryDTO query) {
+        PageHelper.startPage(query.getPageNum(), query.getPageSize());
+        List<Inbound> list = inboundMapper.search(query);
+        Page<Inbound> pageResult = (Page<Inbound>) list;
+        long total = pageResult.getTotal();
+        List<InboundVO> records = pageResult.getResult().stream()
                 .map(this::convertToVO)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<InboundVO> search(InboundQueryDTO query) {
-        return inboundMapper.search(query).stream()
-                .map(this::convertToVO)
-                .collect(Collectors.toList());
+        return new PageBean<>(total, records);
     }
 
     private String generateInboundNo() {

@@ -36,10 +36,6 @@
         SELECT * FROM material WHERE code=#{code} AND status=1
     </select>
 
-    <select id="findAll" resultType="com.fjt.pojo.entity.Material">
-        SELECT * FROM material WHERE status=1 ORDER BY created_at DESC
-    </select>
-
     <select id="search" resultType="com.fjt.pojo.entity.Material">
         SELECT * FROM material
         <where>

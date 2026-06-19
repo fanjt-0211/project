@@ -27,10 +27,6 @@
         SELECT * FROM material_category WHERE id=#{id} AND status=1
     </select>
 
-    <select id="findAll" resultType="com.fjt.pojo.entity.MaterialCategory">
-        SELECT * FROM material_category WHERE status=1 ORDER BY sort_order, id
-    </select>
-
     <select id="search" resultType="com.fjt.pojo.entity.MaterialCategory">
         SELECT * FROM material_category
         <where>

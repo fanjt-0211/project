@@ -9,6 +9,7 @@
     <update id="update" parameterType="com.fjt.pojo.entity.User">
         UPDATE warehouse_user
         <set>
+            <if test="username != null and username != ''">username=#{username},</if>
             <if test="password != null and password != ''">password=#{password},</if>
             <if test="realName != null and realName != ''">real_name=#{realName},</if>
             <if test="phone != null and phone != ''">phone=#{phone},</if>
@@ -29,10 +30,6 @@
 
     <select id="findByUsername" resultType="com.fjt.pojo.entity.User">
         SELECT * FROM warehouse_user WHERE username=#{username} AND status=1
-    </select>
-
-    <select id="findAll" resultType="com.fjt.pojo.entity.User">
-        SELECT * FROM warehouse_user WHERE status=1 ORDER BY created_at DESC
     </select>
 
     <select id="search" resultType="com.fjt.pojo.entity.User">

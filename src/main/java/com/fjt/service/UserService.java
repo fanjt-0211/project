@@ -14,6 +14,5 @@ public interface UserService {
     void delete(Long id);
     UserVO findById(Long id);
     User findByUsername(String username);
-    List<UserVO> findAll();
     List<UserVO> search(UserQueryDTO query);
 }

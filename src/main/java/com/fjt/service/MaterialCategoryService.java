@@ -12,6 +12,5 @@ public interface MaterialCategoryService {
     void update(MaterialCategoryDTO dto, Long id);
     void delete(Long id);
     MaterialCategoryVO findById(Long id);
-    List<MaterialCategoryVO> findAll();
     List<MaterialCategoryVO> search(MaterialCategoryQueryDTO query);
 }

@@ -22,10 +22,6 @@
         SELECT * FROM stock WHERE material_id=#{materialId} AND warehouse_id=#{warehouseId}
     </select>
 
-    <select id="findAll" resultType="com.fjt.pojo.entity.Stock">
-        SELECT * FROM stock ORDER BY material_id, warehouse_id
-    </select>
-
     <select id="search" resultType="com.fjt.pojo.entity.Stock">
         SELECT * FROM stock
         <where>

@@ -18,11 +18,11 @@ public class MaterialCategoryController {
     private MaterialCategoryService materialCategoryService;
 
     /**
-     * 查询所有分类
+     * 查询所有分类 - 支持多条件查询
      */
     @GetMapping
-    public Result<List<MaterialCategoryVO>> list() {
-        return Result.success(materialCategoryService.findAll());
+    public Result<List<MaterialCategoryVO>> list(MaterialCategoryQueryDTO query) {
+        return Result.success(materialCategoryService.search(query));
     }
 
     /**
@@ -31,15 +31,6 @@ public class MaterialCategoryController {
     @GetMapping("/{id}")
     public Result<MaterialCategoryVO> getById(@PathVariable Long id) {
         return Result.success(materialCategoryService.findById(id));
-    }
-
-    /**
-     * 通用查询接口 - 支持多条件模糊查询
-     * 参数可为空，为空则查询所有
-     */
-    @GetMapping("/search")
-    public Result<List<MaterialCategoryVO>> search(MaterialCategoryQueryDTO query) {
-        return Result.success(materialCategoryService.search(query));
     }
 
     /**

@@ -29,10 +29,6 @@
         SELECT * FROM inbound WHERE inbound_no=#{inboundNo}
     </select>
 
-    <select id="findAll" resultType="com.fjt.pojo.entity.Inbound">
-        SELECT * FROM inbound ORDER BY created_at DESC
-    </select>
-
     <select id="search" resultType="com.fjt.pojo.entity.Inbound">
         SELECT * FROM inbound
         <where>

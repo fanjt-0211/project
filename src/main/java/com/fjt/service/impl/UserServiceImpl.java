@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void add(User user) {
         user.setStatus(1);
+        user.setPassword(MD5Utils.encrypt(user.getPassword()));
         userMapper.insert(user);
     }
     public void update(User user) {
@@ -52,13 +53,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsername(String username) {
         return userMapper.findByUsername(username);
-    }
-
-    @Override
-    public List<UserVO> findAll() {
-        return userMapper.findAll().stream()
-                .map(this::convertToVO)
-                .collect(Collectors.toList());
     }
 
     @Override

@@ -2,12 +2,15 @@ package com.fjt.service.impl;
 
 import com.fjt.mapper.MaterialCategoryMapper;
 import com.fjt.mapper.MaterialMapper;
+import com.fjt.pojo.PageBean;
 import com.fjt.pojo.dto.MaterialDTO;
 import com.fjt.pojo.dto.MaterialQueryDTO;
 import com.fjt.pojo.entity.Material;
 import com.fjt.pojo.entity.MaterialCategory;
 import com.fjt.pojo.vo.MaterialVO;
 import com.fjt.service.MaterialService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,18 +59,20 @@ public class MaterialServiceImpl implements MaterialService {
         return materialMapper.findByCode(code);
     }
 
+    /**
+     * 通用查询接口 - 支持多条件分页查询
+     * 参数可为空，为空则查询所有
+     */
     @Override
-    public List<MaterialVO> findAll() {
-        return materialMapper.findAll().stream()
+    public PageBean<MaterialVO> list(MaterialQueryDTO query) {
+        PageHelper.startPage(query.getPageNum(), query.getPageSize());
+        List<Material> list = materialMapper.search(query);
+        Page<Material> pageResult = (Page<Material>) list;
+        long total = pageResult.getTotal();
+        List<MaterialVO> records = pageResult.getResult().stream()
                 .map(this::convertToVO)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<MaterialVO> search(MaterialQueryDTO query) {
-        return materialMapper.search(query).stream()
-                .map(this::convertToVO)
-                .collect(Collectors.toList());
+        return new PageBean<>(total, records);
     }
 
     @Override

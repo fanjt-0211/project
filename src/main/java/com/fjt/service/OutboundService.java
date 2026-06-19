@@ -5,6 +5,8 @@ import com.fjt.pojo.dto.OutboundQueryDTO;
 import com.fjt.pojo.entity.Outbound;
 import com.fjt.pojo.vo.OutboundVO;
 
+import com.fjt.pojo.PageBean;
+
 import java.util.List;
 
 public interface OutboundService {
@@ -12,6 +14,5 @@ public interface OutboundService {
     void update(Outbound outbound);
     OutboundVO findById(Long id);
     OutboundVO findByOutboundNo(String outboundNo);
-    List<OutboundVO> findAll();
-    List<OutboundVO> search(OutboundQueryDTO query);
+    PageBean<OutboundVO> list(OutboundQueryDTO query);
 }

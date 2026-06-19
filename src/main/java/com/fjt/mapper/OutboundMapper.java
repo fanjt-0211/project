@@ -12,6 +12,5 @@ public interface OutboundMapper {
     void update(Outbound outbound);
     Outbound findById(Long id);
     Outbound findByOutboundNo(String outboundNo);
-    List<Outbound> findAll();
     List<Outbound> search(OutboundQueryDTO query);
 }

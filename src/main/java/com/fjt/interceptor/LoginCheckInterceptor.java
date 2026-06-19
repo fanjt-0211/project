@@ -1,13 +1,16 @@
 package com.fjt.interceptor;
 
+import com.fjt.annotation.RequireAdmin;
 import com.fjt.config.JwtProperties;
 import com.fjt.pojo.Result;
 import com.fjt.utils.JwtUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.io.PrintWriter;
@@ -31,7 +34,22 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         }
         
         try {
-            JwtUtils.parseJWT(jwtProperties.getAdminSecretKey(), token);
+            Claims claims = JwtUtils.parseJWT(jwtProperties.getAdminSecretKey(), token);
+
+            // 如果方法有 @RequireAdmin 注解，检查角色是否为管理员
+            if (handler instanceof HandlerMethod hm) {
+                RequireAdmin requireAdmin = hm.getMethodAnnotation(RequireAdmin.class);
+                if (requireAdmin != null) {
+                    Integer role = claims.get("role", Integer.class);
+                    if (role == null || role != 1) {
+                        response.setContentType("application/json");
+                        response.setCharacterEncoding("UTF-8");
+                        PrintWriter writer = response.getWriter();
+                        writer.write(new ObjectMapper().writeValueAsString(Result.error("无权限操作")));
+                        return false;
+                    }
+                }
+            }
             return true;
         } catch (Exception e) {
             response.setContentType("application/json");

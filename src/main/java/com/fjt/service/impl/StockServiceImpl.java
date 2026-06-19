@@ -3,12 +3,15 @@ package com.fjt.service.impl;
 import com.fjt.mapper.MaterialMapper;
 import com.fjt.mapper.StockMapper;
 import com.fjt.mapper.WarehouseMapper;
+import com.fjt.pojo.PageBean;
 import com.fjt.pojo.dto.StockQueryDTO;
 import com.fjt.pojo.entity.Material;
 import com.fjt.pojo.entity.Stock;
 import com.fjt.pojo.entity.Warehouse;
 import com.fjt.pojo.vo.StockVO;
 import com.fjt.service.StockService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,18 +58,20 @@ public class StockServiceImpl implements StockService {
         return stockMapper.findByMaterialAndWarehouse(materialId, warehouseId);
     }
 
+    /**
+     * 通用查询接口 - 支持多条件分页查询
+     * 参数可为空，为空则查询所有
+     */
     @Override
-    public List<StockVO> findAll() {
-        return stockMapper.findAll().stream()
+    public PageBean<StockVO> list(StockQueryDTO query) {
+        PageHelper.startPage(query.getPageNum(), query.getPageSize());
+        List<Stock> list = stockMapper.search(query);
+        Page<Stock> pageResult = (Page<Stock>) list;
+        long total = pageResult.getTotal();
+        List<StockVO> records = pageResult.getResult().stream()
                 .map(this::convertToVO)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<StockVO> search(StockQueryDTO query) {
-        return stockMapper.search(query).stream()
-                .map(this::convertToVO)
-                .collect(Collectors.toList());
+        return new PageBean<>(total, records);
     }
 
     @Override

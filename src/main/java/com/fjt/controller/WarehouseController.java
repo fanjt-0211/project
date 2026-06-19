@@ -18,11 +18,11 @@ public class WarehouseController {
     private WarehouseService warehouseService;
 
     /**
-     * 查询仓库列表
+     * 查询所有仓库 - 支持多条件查询
      */
     @GetMapping
-    public Result<List<WarehouseVO>> list() {
-        return Result.success(warehouseService.findAll());
+    public Result<List<WarehouseVO>> list(WarehouseQueryDTO query) {
+        return Result.success(warehouseService.search(query));
     }
 
     /**
@@ -30,16 +30,7 @@ public class WarehouseController {
      */
     @GetMapping("/{id}")
     public Result<WarehouseVO> getById(@PathVariable Long id) {
-        return Result.success(null);
-    }
-
-    /**
-     * 通用查询接口 - 支持多条件模糊查询
-     * 参数可为空，为空则查询所有
-     */
-    @GetMapping("/search")
-    public Result<List<WarehouseVO>> search(WarehouseQueryDTO query) {
-        return Result.success(warehouseService.search(query));
+        return Result.success(warehouseService.findById(id));
     }
 
     /**

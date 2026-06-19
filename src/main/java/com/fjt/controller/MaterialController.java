@@ -1,5 +1,7 @@
 package com.fjt.controller;
 
+import com.fjt.annotation.RequireAdmin;
+import com.fjt.pojo.PageBean;
 import com.fjt.pojo.dto.MaterialDTO;
 import com.fjt.pojo.dto.MaterialQueryDTO;
 import com.fjt.pojo.Result;
@@ -18,11 +20,11 @@ public class MaterialController {
     private MaterialService materialService;
 
     /**
-     * 查询所有物料
+     * 分页查询物料 - 支持动态条件查询
      */
     @GetMapping
-    public Result<List<MaterialVO>> list() {
-        return Result.success(materialService.findAll());
+    public Result<PageBean<MaterialVO>> list(MaterialQueryDTO query) {
+        return Result.success(materialService.list(query));
     }
 
     /**
@@ -31,15 +33,6 @@ public class MaterialController {
     @GetMapping("/{id}")
     public Result<MaterialVO> getById(@PathVariable Long id) {
         return Result.success(materialService.findById(id));
-    }
-
-    /**
-     * 通用查询接口 - 支持多条件模糊查询
-     * 参数可为空，为空则查询所有
-     */
-    @GetMapping("/search")
-    public Result<List<MaterialVO>> search(MaterialQueryDTO query) {
-        return Result.success(materialService.search(query));
     }
 
     /**

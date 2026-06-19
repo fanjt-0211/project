@@ -14,7 +14,6 @@ public interface MaterialMapper {
     void deleteById(Long id);
     Material findById(Long id);
     Material findByCode(String code);
-    List<Material> findAll();
     List<Material> search(MaterialQueryDTO query);
     List<Material> findStockWarning();
 }
