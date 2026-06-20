@@ -10,7 +10,7 @@ import java.util.List;
 public interface MaterialCategoryService {
     void add(MaterialCategoryDTO dto);
     void update(MaterialCategoryDTO dto, Long id);
-    void delete(Long id);
+    void updateStatus(Long id, Integer status);
     MaterialCategoryVO findById(Long id);
     List<MaterialCategoryVO> search(MaterialCategoryQueryDTO query);
 }

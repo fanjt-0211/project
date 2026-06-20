@@ -10,17 +10,12 @@
         UPDATE material_category
         <set>
             <if test="name != null and name != ''">name=#{name},</if>
-            <if test="code != null and code != ''">code=#{code},</if>
             <if test="description != null">description=#{description},</if>
             <if test="parentId != null">parent_id=#{parentId},</if>
             <if test="sortOrder != null">sort_order=#{sortOrder},</if>
             <if test="status != null">status=#{status},</if>
         </set>
         WHERE id=#{id}
-    </update>
-
-    <update id="deleteById">
-        UPDATE material_category SET status=0 WHERE id=#{id}
     </update>
 
     <select id="findById" resultType="com.fjt.pojo.entity.MaterialCategory">

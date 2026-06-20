@@ -45,18 +45,18 @@ public class MaterialCategoryController {
     /**
      * 修改分类
      */
-    @PutMapping("/{id}")
-    public Result<Void> update(@RequestBody MaterialCategoryDTO dto, @PathVariable Long id) {
-        materialCategoryService.update(dto, id);
+    @PutMapping
+    public Result<Void> update(@RequestBody MaterialCategoryDTO dto) {
+        materialCategoryService.update(dto, dto.getId());
         return Result.success();
     }
 
     /**
-     * 删除分类
+     * 启用/禁用分类
      */
-    @DeleteMapping("/{id}")
-    public Result<Void> delete(@PathVariable Long id) {
-        materialCategoryService.delete(id);
+    @PostMapping("/status/{status}")
+    public Result<Void> updateStatus(@PathVariable Integer status, @RequestBody MaterialCategoryDTO dto) {
+        materialCategoryService.updateStatus(dto.getId(), status);
         return Result.success();
     }
 }

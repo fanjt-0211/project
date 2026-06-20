@@ -18,7 +18,6 @@ public class Material {
     private Integer minStock;
     private Integer maxStock;
     private String description;
-    private Integer status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

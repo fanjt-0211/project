@@ -10,7 +10,6 @@ import java.util.List;
 public interface MaterialCategoryMapper {
     void insert(MaterialCategory category);
     void update(MaterialCategory category);
-    void deleteById(Long id);
     MaterialCategory findById(Long id);
     List<MaterialCategory> search(MaterialCategoryQueryDTO query);
 }

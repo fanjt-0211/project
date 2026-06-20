@@ -5,6 +5,7 @@ import com.fjt.pojo.entity.Material;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.github.pagehelper.Page;
 import java.util.List;
 
 @Mapper
@@ -14,6 +15,7 @@ public interface MaterialMapper {
     void deleteById(Long id);
     Material findById(Long id);
     Material findByCode(String code);
-    List<Material> search(MaterialQueryDTO query);
+    Page<Material> search(MaterialQueryDTO query);
     List<Material> findStockWarning();
+    int countByCategoryId(Long categoryId);
 }

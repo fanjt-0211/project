@@ -25,7 +25,6 @@ CREATE TABLE IF NOT EXISTS `material` (
     `min_stock` INT DEFAULT 0 COMMENT '最低库存阈值',
     `max_stock` INT DEFAULT 0 COMMENT '最高库存阈值',
     `description` VARCHAR(500) DEFAULT '' COMMENT '备注说明',
-    `status` TINYINT DEFAULT 1 COMMENT '状态：1-启用，0-禁用',
     `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     INDEX `idx_category_id` (`category_id`),

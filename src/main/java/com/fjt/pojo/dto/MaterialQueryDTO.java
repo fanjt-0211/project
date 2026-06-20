@@ -11,5 +11,4 @@ public class MaterialQueryDTO extends PageQueryDTO {
     private String spec;
     private String unit;
     private Long categoryId;
-    private Integer status;
 }

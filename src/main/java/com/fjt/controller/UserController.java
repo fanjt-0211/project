@@ -70,6 +70,13 @@ public class UserController {
         return Result.success();
     }
 
+    /**
+     * 启用/禁用用户
+     *
+     * @param status
+     * @param userDTO
+     * @return
+     */
     @RequireAdmin
     @PostMapping("/status/{status}")
     public Result<Void> updateStatus(@PathVariable Integer status, @RequestBody UserDTO userDTO) {

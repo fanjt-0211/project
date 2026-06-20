@@ -29,9 +29,13 @@ public class MaterialServiceImpl implements MaterialService {
 
     @Override
     public void add(MaterialDTO dto) {
+        // 校验分类是否存在且启用
+        MaterialCategory category = categoryMapper.findById(dto.getCategoryId());
+        if (category == null) {
+            throw new RuntimeException("所选分类不存在或已禁用");
+        }
         Material material = new Material();
         BeanUtils.copyProperties(dto, material);
-        material.setStatus(1);
         materialMapper.insert(material);
     }
 

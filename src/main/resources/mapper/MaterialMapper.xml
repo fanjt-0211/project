@@ -19,27 +19,25 @@
             <if test="minStock != null">min_stock=#{minStock},</if>
             <if test="maxStock != null">max_stock=#{maxStock},</if>
             <if test="description != null">description=#{description},</if>
-            <if test="status != null">status=#{status},</if>
         </set>
         WHERE id=#{id}
     </update>
 
     <update id="deleteById">
-        UPDATE material SET status=0 WHERE id=#{id}
+        DELETE FROM material WHERE id=#{id}
     </update>
 
     <select id="findById" resultType="com.fjt.pojo.entity.Material">
-        SELECT * FROM material WHERE id=#{id} AND status=1
+        SELECT * FROM material WHERE id=#{id}
     </select>
 
     <select id="findByCode" resultType="com.fjt.pojo.entity.Material">
-        SELECT * FROM material WHERE code=#{code} AND status=1
+        SELECT * FROM material WHERE code=#{code}
     </select>
 
     <select id="search" resultType="com.fjt.pojo.entity.Material">
         SELECT * FROM material
         <where>
-            status=1
             <if test="code != null and code != ''">
                 AND code LIKE CONCAT('%', #{code}, '%')
             </if>
@@ -52,18 +50,18 @@
             <if test="categoryId != null">
                 AND category_id = #{categoryId}
             </if>
-            <if test="status != null">
-                AND status = #{status}
-            </if>
         </where>
-        ORDER BY created_at DESC
+        ORDER BY category_id ASC
     </select>
 
     <select id="findStockWarning" resultType="com.fjt.pojo.entity.Material">
-        SELECT m.* FROM material m 
+        SELECT m.* FROM material m
         LEFT JOIN stock s ON m.id = s.material_id
-        WHERE m.status=0
         GROUP BY m.id
         HAVING COALESCE(SUM(s.quantity), 0) &lt; m.min_stock
+    </select>
+
+    <select id="countByCategoryId" resultType="int">
+        SELECT COUNT(*) FROM material WHERE category_id=#{categoryId}
     </select>
 </mapper>
