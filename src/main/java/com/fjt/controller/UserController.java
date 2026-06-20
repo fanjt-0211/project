@@ -3,8 +3,8 @@ package com.fjt.controller;
 import com.fjt.annotation.RequireAdmin;
 import com.fjt.config.JwtProperties;
 import com.fjt.pojo.dto.LoginDTO;
+import com.fjt.pojo.dto.UserDTO;
 import com.fjt.pojo.dto.UserQueryDTO;
-import com.fjt.pojo.entity.User;
 import com.fjt.pojo.Result;
 import com.fjt.pojo.vo.UserVO;
 import com.fjt.service.UserService;
@@ -33,6 +33,7 @@ public class UserController {
             Map<String, Object> claims = new HashMap<>();
             claims.put("id", userVO.getId());
             claims.put("username", userVO.getUsername());
+            claims.put("role", userVO.getRole());
             String token = JwtUtils.createJWT(jwtProperties.getAdminSecretKey(), jwtProperties.getAdminTtl(), claims);
             return Result.success(token);
         }
@@ -51,23 +52,28 @@ public class UserController {
 
     @RequireAdmin
     @PostMapping
-    public Result<Void> add(@RequestBody User user) {
-        userService.add(user);
+    public Result<Void> add(@RequestBody UserDTO userDTO) {
+        userService.add(userDTO);
+        return Result.success();
+    }
+
+    /**
+     * 修改用户信息
+     *
+     * @param userDTO
+     * @return
+     */
+    @RequireAdmin
+    @PutMapping
+    public Result<Void> update(@RequestBody UserDTO userDTO) {
+        userService.update(userDTO);
         return Result.success();
     }
 
     @RequireAdmin
-    @PutMapping("/{id}")
-    public Result<Void> update(@RequestBody User user, @PathVariable Long id) {
-        user.setId(id);
-        userService.update(user);
-        return Result.success();
-    }
-
-    @RequireAdmin
-    @DeleteMapping("/{id}")
-    public Result<Void> delete(@PathVariable Long id) {
-        userService.delete(id);
+    @PostMapping("/status/{status}")
+    public Result<Void> updateStatus(@PathVariable Integer status, @RequestBody UserDTO userDTO) {
+        userService.updateStatus(userDTO.getId(), status);
         return Result.success();
     }
 }

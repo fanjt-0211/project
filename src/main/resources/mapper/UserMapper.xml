@@ -20,10 +20,6 @@
         WHERE id=#{id}
     </update>
 
-    <update id="deleteById">
-        UPDATE warehouse_user SET status=0 WHERE id=#{id}
-    </update>
-
     <select id="findById" resultType="com.fjt.pojo.entity.User">
         SELECT * FROM warehouse_user WHERE id=#{id} AND status=1
     </select>

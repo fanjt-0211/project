@@ -10,7 +10,6 @@ import java.util.List;
 public interface UserMapper {
     void insert(User user);
     void update(User user);
-    void deleteById(Long id);
     User findById(Long id);
     User findByUsername(String username);
     List<User> search(UserQueryDTO query);

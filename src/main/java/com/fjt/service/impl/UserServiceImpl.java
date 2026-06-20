@@ -2,6 +2,7 @@ package com.fjt.service.impl;
 
 import com.fjt.mapper.UserMapper;
 import com.fjt.pojo.dto.LoginDTO;
+import com.fjt.pojo.dto.UserDTO;
 import com.fjt.pojo.dto.UserQueryDTO;
 import com.fjt.pojo.entity.User;
 import com.fjt.pojo.vo.UserVO;
@@ -30,29 +31,33 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void add(User user) {
+    public void add(UserDTO userDTO) {
+        User user = new User();
+        BeanUtils.copyProperties(userDTO, user);
         user.setStatus(1);
-        user.setPassword(MD5Utils.encrypt(user.getPassword()));
+        user.setPassword(MD5Utils.encrypt("123456"));
         userMapper.insert(user);
     }
-    public void update(User user) {
+
+    @Override
+    public void update(UserDTO userDTO) {
+        User user = new User();
+        BeanUtils.copyProperties(userDTO, user);
         userMapper.update(user);
     }
 
     @Override
-    public void delete(Long id) {
-        userMapper.deleteById(id);
+    public void updateStatus(Long id, Integer status) {
+        User user = new User();
+        user.setId(id);
+        user.setStatus(status);
+        userMapper.update(user);
     }
 
     @Override
     public UserVO findById(Long id) {
         User user = userMapper.findById(id);
         return user != null ? convertToVO(user) : null;
-    }
-
-    @Override
-    public User findByUsername(String username) {
-        return userMapper.findByUsername(username);
     }
 
     @Override
