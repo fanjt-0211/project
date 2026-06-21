@@ -30,7 +30,11 @@ public class WarehouseController {
      */
     @GetMapping("/{id}")
     public Result<WarehouseVO> getById(@PathVariable Long id) {
-        return Result.success(warehouseService.findById(id));
+        WarehouseVO warehouse = warehouseService.findById(id);
+        if (warehouse == null) {
+            return Result.error("仓库不存在");
+        }
+        return Result.success(warehouse);
     }
 
     /**

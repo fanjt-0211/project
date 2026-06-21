@@ -10,4 +10,5 @@ public class MaterialCategoryVO {
     private Long parentId;
     private String parentName;
     private Integer sortOrder;
+    private Integer status;
 }

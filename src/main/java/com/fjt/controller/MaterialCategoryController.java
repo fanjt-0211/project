@@ -30,7 +30,11 @@ public class MaterialCategoryController {
      */
     @GetMapping("/{id}")
     public Result<MaterialCategoryVO> getById(@PathVariable Long id) {
-        return Result.success(materialCategoryService.findById(id));
+        MaterialCategoryVO category = materialCategoryService.findById(id);
+        if (category == null) {
+            return Result.error("分类不存在");
+        }
+        return Result.success(category);
     }
 
     /**

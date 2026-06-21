@@ -30,7 +30,11 @@ public class StockController {
      */
     @GetMapping("/{id}")
     public Result<StockVO> getById(@PathVariable Long id) {
-        return Result.success(stockService.findById(id));
+        StockVO stock = stockService.findById(id);
+        if (stock == null) {
+            return Result.error("库存记录不存在");
+        }
+        return Result.success(stock);
     }
 
     /**

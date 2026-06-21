@@ -29,7 +29,11 @@ public class OutboundController {
      */
     @GetMapping("/{id}")
     public Result<OutboundVO> getById(@PathVariable Long id) {
-        return Result.success(outboundService.findById(id));
+        OutboundVO outbound = outboundService.findById(id);
+        if (outbound == null) {
+            return Result.error("出库单不存在");
+        }
+        return Result.success(outbound);
     }
 
     /**

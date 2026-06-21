@@ -32,7 +32,11 @@ public class MaterialController {
      */
     @GetMapping("/{id}")
     public Result<MaterialVO> getById(@PathVariable Long id) {
-        return Result.success(materialService.findById(id));
+        MaterialVO material = materialService.findById(id);
+        if (material == null) {
+            return Result.error("物资不存在");
+        }
+        return Result.success(material);
     }
 
     /**

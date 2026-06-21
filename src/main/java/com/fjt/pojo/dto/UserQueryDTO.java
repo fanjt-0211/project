@@ -8,4 +8,5 @@ public class UserQueryDTO {
     private String username;
     private String realName;
     private Integer role;
+    private Integer status;
 }

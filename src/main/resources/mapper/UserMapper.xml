@@ -21,7 +21,7 @@
     </update>
 
     <select id="findById" resultType="com.fjt.pojo.entity.User">
-        SELECT * FROM warehouse_user WHERE id=#{id} AND status=1
+        SELECT * FROM warehouse_user WHERE id=#{id}
     </select>
 
     <select id="findByUsername" resultType="com.fjt.pojo.entity.User">
@@ -31,7 +31,9 @@
     <select id="search" resultType="com.fjt.pojo.entity.User">
         SELECT * FROM warehouse_user
         <where>
-            status=1
+            <if test="status != null">
+                status = #{status}
+            </if>
             <if test="username != null and username != ''">
                 AND username LIKE CONCAT('%', #{username}, '%')
             </if>

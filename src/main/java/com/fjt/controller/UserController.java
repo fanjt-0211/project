@@ -47,7 +47,11 @@ public class UserController {
 
     @GetMapping("/{id}")
     public Result<UserVO> getById(@PathVariable Long id) {
-        return Result.success(userService.findById(id));
+        UserVO user = userService.findById(id);
+        if (user == null) {
+            return Result.error("用户不存在");
+        }
+        return Result.success(user);
     }
 
     @RequireAdmin

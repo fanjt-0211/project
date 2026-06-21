@@ -24,11 +24,11 @@
     </update>
 
     <select id="findById" resultType="com.fjt.pojo.entity.Warehouse">
-        SELECT * FROM warehouse WHERE id=#{id} AND status=1
+        SELECT * FROM warehouse WHERE id=#{id}
     </select>
 
     <select id="findByCode" resultType="com.fjt.pojo.entity.Warehouse">
-        SELECT * FROM warehouse WHERE code=#{code} AND status=1
+        SELECT * FROM warehouse WHERE code=#{code}
     </select>
 
     <select id="search" resultType="com.fjt.pojo.entity.Warehouse">
@@ -36,9 +36,6 @@
         <where>
             <if test="status != null">
                 status = #{status}
-            </if>
-            <if test="status == null">
-                status = 1
             </if>
             <if test="code != null and code != ''">
                 AND code LIKE CONCAT('%', #{code}, '%')

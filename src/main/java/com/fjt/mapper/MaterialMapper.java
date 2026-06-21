@@ -18,10 +18,25 @@ public interface MaterialMapper {
      * 修改物料
      */
     void update(Material material);
-
+    /**
+     * 根据id查询物料
+     */
     Material findById(Long id);
+    /**
+     * 根据编码查询物料
+     */
     Material findByCode(String code);
+    /**
+     * 通用查询接口 - 支持多条件分页查询
+     * <p>参数可为空，为空则查询所有</p>
+     */
     Page<Material> search(MaterialQueryDTO query);
+    /**
+     * 查询库存预警物料
+     */
     List<Material> findStockWarning();
+    /**
+     * 根据分类id查询物料数量
+     */
     int countByCategoryId(Long categoryId);
 }

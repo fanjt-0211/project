@@ -19,13 +19,15 @@
     </update>
 
     <select id="findById" resultType="com.fjt.pojo.entity.MaterialCategory">
-        SELECT * FROM material_category WHERE id=#{id} AND status=1
+        SELECT * FROM material_category WHERE id=#{id}
     </select>
 
     <select id="search" resultType="com.fjt.pojo.entity.MaterialCategory">
         SELECT * FROM material_category
         <where>
-            status=1
+            <if test="status != null">
+                status = #{status}
+            </if>
             <if test="name != null and name != ''">
                 AND name LIKE CONCAT('%', #{name}, '%')
             </if>
@@ -34,9 +36,6 @@
             </if>
             <if test="parentId != null">
                 AND parent_id = #{parentId}
-            </if>
-            <if test="status != null">
-                AND status = #{status}
             </if>
         </where>
         ORDER BY sort_order, id

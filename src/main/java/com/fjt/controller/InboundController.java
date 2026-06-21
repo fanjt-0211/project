@@ -29,7 +29,11 @@ public class InboundController {
      */
     @GetMapping("/{id}")
     public Result<InboundVO> getById(@PathVariable Long id) {
-        return Result.success(inboundService.findById(id));
+        InboundVO inbound = inboundService.findById(id);
+        if (inbound == null) {
+            return Result.error("入库单不存在");
+        }
+        return Result.success(inbound);
     }
 
     /**
