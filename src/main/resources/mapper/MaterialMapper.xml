@@ -23,10 +23,6 @@
         WHERE id=#{id}
     </update>
 
-    <update id="deleteById">
-        DELETE FROM material WHERE id=#{id}
-    </update>
-
     <select id="findById" resultType="com.fjt.pojo.entity.Material">
         SELECT * FROM material WHERE id=#{id}
     </select>

@@ -10,9 +10,15 @@ import java.util.List;
 
 @Mapper
 public interface MaterialMapper {
+    /**
+     * 添加物料
+     */
     void insert(Material material);
+    /**
+     * 修改物料
+     */
     void update(Material material);
-    void deleteById(Long id);
+
     Material findById(Long id);
     Material findByCode(String code);
     Page<Material> search(MaterialQueryDTO query);
