@@ -10,11 +10,9 @@ import java.util.List;
 public interface StockService {
     void add(Stock stock);
     void update(Stock stock);
-    void delete(Long id);
     StockVO findById(Long id);
     Stock findByMaterialAndWarehouse(Long materialId, Long warehouseId);
     PageBean<StockVO> list(StockQueryDTO query);
-    void updateQuantity(Long materialId, Long warehouseId, Integer quantity);
     void increaseStock(Long materialId, Long warehouseId, Integer quantity);
     void decreaseStock(Long materialId, Long warehouseId, Integer quantity);
     List<StockVO> findStockWarning();

@@ -43,11 +43,6 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public void delete(Long id) {
-        stockMapper.deleteById(id);
-    }
-
-    @Override
     public StockVO findById(Long id) {
         Stock stock = stockMapper.findById(id);
         return stock != null ? convertToVO(stock) : null;
@@ -72,11 +67,6 @@ public class StockServiceImpl implements StockService {
                 .map(this::convertToVO)
                 .collect(Collectors.toList());
         return new PageBean<>(total, records);
-    }
-
-    @Override
-    public void updateQuantity(Long materialId, Long warehouseId, Integer quantity) {
-        stockMapper.updateQuantity(materialId, warehouseId, quantity);
     }
 
     @Override

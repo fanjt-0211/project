@@ -51,6 +51,11 @@ public class MaterialServiceImpl implements MaterialService {
      */
     @Override
     public void update(MaterialDTO dto, Long id) {
+        // 校验物资编码是否与其他记录重复
+        Material existing = materialMapper.findByCode(dto.getCode());
+        if (existing != null && !existing.getId().equals(id)) {
+            throw new RuntimeException("物资编码已存在");
+        }
         Material material = new Material();
         BeanUtils.copyProperties(dto, material);
         material.setId(id);

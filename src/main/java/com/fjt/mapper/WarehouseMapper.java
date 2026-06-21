@@ -10,7 +10,6 @@ import java.util.List;
 public interface WarehouseMapper {
     void insert(Warehouse warehouse);
     void update(Warehouse warehouse);
-    void deleteById(Long id);
     Warehouse findById(Long id);
     Warehouse findByCode(String code);
     List<Warehouse> search(WarehouseQueryDTO query);

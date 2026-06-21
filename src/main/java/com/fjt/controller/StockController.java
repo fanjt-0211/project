@@ -44,13 +44,4 @@ public class StockController {
     public Result<List<StockVO>> getStockWarning() {
         return Result.success(stockService.findStockWarning());
     }
-
-    /**
-     * 删除库存
-     */
-    @DeleteMapping("/{id}")
-    public Result<Void> delete(@PathVariable Long id) {
-        stockService.delete(id);
-        return Result.success();
-    }
 }

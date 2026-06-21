@@ -14,13 +14,8 @@
             <if test="location != null and location != ''">location=#{location},</if>
             <if test="capacity != null">capacity=#{capacity},</if>
             <if test="description != null">description=#{description},</if>
-            <if test="status != null">status=#{status},</if>
         </set>
         WHERE id=#{id}
-    </update>
-
-    <update id="deleteById">
-        UPDATE warehouse SET status=0 WHERE id=#{id}
     </update>
 
     <select id="findById" resultType="com.fjt.pojo.entity.Warehouse">
@@ -34,9 +29,6 @@
     <select id="search" resultType="com.fjt.pojo.entity.Warehouse">
         SELECT * FROM warehouse
         <where>
-            <if test="status != null">
-                status = #{status}
-            </if>
             <if test="code != null and code != ''">
                 AND code LIKE CONCAT('%', #{code}, '%')
             </if>

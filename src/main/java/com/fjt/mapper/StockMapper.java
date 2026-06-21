@@ -11,11 +11,9 @@ import java.util.List;
 public interface StockMapper {
     void insert(Stock stock);
     void update(Stock stock);
-    void deleteById(Long id);
     Stock findById(Long id);
     Stock findByMaterialAndWarehouse(@Param("materialId") Long materialId, @Param("warehouseId") Long warehouseId);
     List<Stock> search(StockQueryDTO query);
-    void updateQuantity(@Param("materialId") Long materialId, @Param("warehouseId") Long warehouseId, @Param("quantity") Integer quantity);
     void increaseStock(@Param("materialId") Long materialId, @Param("warehouseId") Long warehouseId, @Param("quantity") Integer quantity);
     void decreaseStock(@Param("materialId") Long materialId, @Param("warehouseId") Long warehouseId, @Param("quantity") Integer quantity);
 }

@@ -21,31 +21,44 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Override
     public void add(WarehouseDTO dto) {
+        // 校验仓库编码是否重复
+        if (warehouseMapper.findByCode(dto.getCode()) != null) {
+            throw new RuntimeException("仓库编码已存在");
+        }
         Warehouse warehouse = new Warehouse();
         BeanUtils.copyProperties(dto, warehouse);
         warehouse.setStatus(1);
         warehouseMapper.insert(warehouse);
     }
 
+    /**
+     * 修改仓库
+     */
     @Override
     public void update(WarehouseDTO dto, Long id) {
+        // 校验仓库编码是否与其他记录重复
+        Warehouse existing = warehouseMapper.findByCode(dto.getCode());
+        if (existing != null && !existing.getId().equals(id)) {
+            throw new RuntimeException("仓库编码已存在");
+        }
         Warehouse warehouse = new Warehouse();
         BeanUtils.copyProperties(dto, warehouse);
         warehouse.setId(id);
         warehouseMapper.update(warehouse);
     }
 
-    @Override
-    public void delete(Long id) {
-        warehouseMapper.deleteById(id);
-    }
-
+    /**
+     * 根据id查询仓库
+     */
     @Override
     public WarehouseVO findById(Long id) {
         Warehouse warehouse = warehouseMapper.findById(id);
         return warehouse != null ? convertToVO(warehouse) : null;
     }
 
+    /**
+     * 根据编码查询仓库
+     */
     @Override
     public Warehouse findByCode(String code) {
         return warehouseMapper.findByCode(code);

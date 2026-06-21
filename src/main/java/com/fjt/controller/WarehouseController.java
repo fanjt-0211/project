@@ -54,13 +54,4 @@ public class WarehouseController {
         warehouseService.update(dto, id);
         return Result.success();
     }
-
-    /**
-     * 删除仓库
-     */
-    @DeleteMapping("/{id}")
-    public Result<Void> delete(@PathVariable Long id) {
-        warehouseService.delete(id);
-        return Result.success();
-    }
 }

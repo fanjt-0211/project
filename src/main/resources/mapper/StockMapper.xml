@@ -10,10 +10,6 @@
         UPDATE stock SET quantity=#{quantity} WHERE id=#{id}
     </update>
 
-    <delete id="deleteById">
-        DELETE FROM stock WHERE id=#{id}
-    </delete>
-
     <select id="findById" resultType="com.fjt.pojo.entity.Stock">
         SELECT * FROM stock WHERE id=#{id}
     </select>
@@ -37,10 +33,6 @@
         </where>
         ORDER BY material_id, warehouse_id
     </select>
-
-    <update id="updateQuantity">
-        UPDATE stock SET quantity=#{quantity} WHERE material_id=#{materialId} AND warehouse_id=#{warehouseId}
-    </update>
 
     <update id="increaseStock">
         UPDATE stock SET quantity=quantity+#{quantity} WHERE material_id=#{materialId} AND warehouse_id=#{warehouseId}
