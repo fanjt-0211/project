@@ -11,7 +11,6 @@ import java.util.List;
 public interface MaterialService {
     void add(MaterialDTO dto);
     void update(MaterialDTO dto, Long id);
-    void delete(Long id);
     MaterialVO findById(Long id);
     Material findByCode(String code);
     PageBean<MaterialVO> list(MaterialQueryDTO query);

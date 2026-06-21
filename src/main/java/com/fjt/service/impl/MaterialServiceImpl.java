@@ -27,8 +27,15 @@ public class MaterialServiceImpl implements MaterialService {
     @Autowired
     private MaterialCategoryMapper categoryMapper;
 
+    /**
+     * 添加物料
+     */
     @Override
     public void add(MaterialDTO dto) {
+        // 校验物资编码是否重复
+        if (materialMapper.findByCode(dto.getCode()) != null) {
+            throw new RuntimeException("物资编码已存在");
+        }
         // 校验分类是否存在且启用
         MaterialCategory category = categoryMapper.findById(dto.getCategoryId());
         if (category == null) {
@@ -39,6 +46,9 @@ public class MaterialServiceImpl implements MaterialService {
         materialMapper.insert(material);
     }
 
+    /**
+     * 修改物料
+     */
     @Override
     public void update(MaterialDTO dto, Long id) {
         Material material = new Material();
@@ -47,17 +57,18 @@ public class MaterialServiceImpl implements MaterialService {
         materialMapper.update(material);
     }
 
-    @Override
-    public void delete(Long id) {
-        materialMapper.deleteById(id);
-    }
-
+    /**
+     * 根据id查询物料
+     */
     @Override
     public MaterialVO findById(Long id) {
         Material material = materialMapper.findById(id);
         return material != null ? convertToVO(material) : null;
     }
 
+    /**
+     * 根据编码查询物料
+     */
     @Override
     public Material findByCode(String code) {
         return materialMapper.findByCode(code);
@@ -79,6 +90,9 @@ public class MaterialServiceImpl implements MaterialService {
         return new PageBean<>(total, records);
     }
 
+    /**
+     * 查询库存预警物料
+     */
     @Override
     public List<MaterialVO> findStockWarning() {
         return materialMapper.findStockWarning().stream()
@@ -86,6 +100,9 @@ public class MaterialServiceImpl implements MaterialService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * 转换为VO
+     */
     private MaterialVO convertToVO(Material material) {
         MaterialVO vo = new MaterialVO();
         BeanUtils.copyProperties(material, vo);

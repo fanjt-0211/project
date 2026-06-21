@@ -60,13 +60,4 @@ public class MaterialController {
         materialService.update(dto, id);
         return Result.success();
     }
-
-    /**
-     * 删除物料
-     */
-    @DeleteMapping("/{id}")
-    public Result<Void> delete(@PathVariable Long id) {
-        materialService.delete(id);
-        return Result.success();
-    }
 }

@@ -58,7 +58,7 @@
         SELECT m.* FROM material m
         LEFT JOIN stock s ON m.id = s.material_id
         GROUP BY m.id
-        HAVING COALESCE(SUM(s.quantity), 0) &lt; m.min_stock
+        HAVING COALESCE(SUM(s.quantity), 0) &lt; MIN(m.min_stock)
     </select>
 
     <select id="countByCategoryId" resultType="int">
