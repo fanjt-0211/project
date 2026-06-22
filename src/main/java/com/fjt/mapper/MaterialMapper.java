@@ -5,7 +5,6 @@ import com.fjt.pojo.entity.Material;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.github.pagehelper.Page;
 import java.util.List;
 
 @Mapper
@@ -30,7 +29,7 @@ public interface MaterialMapper {
      * 通用查询接口 - 支持多条件分页查询
      * <p>参数可为空，为空则查询所有</p>
      */
-    Page<Material> search(MaterialQueryDTO query);
+    List<Material> search(MaterialQueryDTO query);
     /**
      * 查询库存预警物料
      */

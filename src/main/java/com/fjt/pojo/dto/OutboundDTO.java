@@ -13,6 +13,5 @@ public class OutboundDTO {
     private BigDecimal unitPrice;
     private String recipient;
     private String department;
-    private Long operatorId;
     private String remark;
 }

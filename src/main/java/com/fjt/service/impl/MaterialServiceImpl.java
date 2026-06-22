@@ -9,8 +9,8 @@ import com.fjt.pojo.entity.Material;
 import com.fjt.pojo.entity.MaterialCategory;
 import com.fjt.pojo.vo.MaterialVO;
 import com.fjt.service.MaterialService;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -87,9 +87,9 @@ public class MaterialServiceImpl implements MaterialService {
     public PageBean<MaterialVO> list(MaterialQueryDTO query) {
         PageHelper.startPage(query.getPageNum(), query.getPageSize());
         List<Material> list = materialMapper.search(query);
-        Page<Material> pageResult = (Page<Material>) list;
-        long total = pageResult.getTotal();
-        List<MaterialVO> records = pageResult.getResult().stream()
+        PageInfo<Material> pageInfo = new PageInfo<>(list);
+        long total = pageInfo.getTotal();
+        List<MaterialVO> records = pageInfo.getList().stream()
                 .map(this::convertToVO)
                 .collect(Collectors.toList());
         return new PageBean<>(total, records);

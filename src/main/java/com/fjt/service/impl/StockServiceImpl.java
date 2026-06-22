@@ -10,8 +10,8 @@ import com.fjt.pojo.entity.Stock;
 import com.fjt.pojo.entity.Warehouse;
 import com.fjt.pojo.vo.StockVO;
 import com.fjt.service.StockService;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,9 +60,9 @@ public class StockServiceImpl implements StockService {
     public PageBean<StockVO> list(StockQueryDTO query) {
         PageHelper.startPage(query.getPageNum(), query.getPageSize());
         List<Stock> list = stockMapper.search(query);
-        Page<Stock> pageResult = (Page<Stock>) list;
-        long total = pageResult.getTotal();
-        List<StockVO> records = pageResult.getResult().stream()
+        PageInfo<Stock> pageInfo = new PageInfo<>(list);
+        long total = pageInfo.getTotal();
+        List<StockVO> records = pageInfo.getList().stream()
                 .map(this::convertToVO)
                 .collect(Collectors.toList());
         return new PageBean<>(total, records);

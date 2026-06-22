@@ -15,8 +15,9 @@ import com.fjt.pojo.entity.Warehouse;
 import com.fjt.pojo.vo.OutboundVO;
 import com.fjt.service.OutboundService;
 import com.fjt.service.StockService;
-import com.github.pagehelper.Page;
+import com.fjt.utils.UserHolder;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,18 +50,27 @@ public class OutboundServiceImpl implements OutboundService {
     @Override
     @Transactional
     public void add(OutboundDTO dto) {
-        Outbound outbound = new Outbound();
-        BeanUtils.copyProperties(dto, outbound);
+        Material material = materialMapper.findById(dto.getMaterialId());
+        if (material == null) {
+            throw new RuntimeException("物资不存在");
+        }
+        
+        Warehouse warehouse = warehouseMapper.findById(dto.getWarehouseId());
+        if (warehouse == null) {
+            throw new RuntimeException("仓库不存在");
+        }
         
         Stock stock = stockService.findByMaterialAndWarehouse(dto.getMaterialId(), dto.getWarehouseId());
-        if (stock == null || stock.getQuantity() < outbound.getQuantity()) {
+        if (stock == null || stock.getQuantity() < dto.getQuantity()) {
             throw new RuntimeException("库存不足");
         }
         
+        Outbound outbound = new Outbound();
+        BeanUtils.copyProperties(dto, outbound);
+        
         outbound.setOutboundNo(generateOutboundNo());
         
-        Material material = materialMapper.findById(dto.getMaterialId());
-        if (material != null && outbound.getUnitPrice() == null) {
+        if (outbound.getUnitPrice() == null) {
             outbound.setUnitPrice(material.getSellPrice());
         }
         
@@ -69,6 +79,7 @@ public class OutboundServiceImpl implements OutboundService {
         }
         
         outbound.setStatus(1);
+        outbound.setOperatorId(UserHolder.getUserId());
         
         outboundMapper.insert(outbound);
         stockService.decreaseStock(outbound.getMaterialId(), outbound.getWarehouseId(), outbound.getQuantity());
@@ -99,9 +110,9 @@ public class OutboundServiceImpl implements OutboundService {
     public PageBean<OutboundVO> list(OutboundQueryDTO query) {
         PageHelper.startPage(query.getPageNum(), query.getPageSize());
         List<Outbound> list = outboundMapper.search(query);
-        Page<Outbound> pageResult = (Page<Outbound>) list;
-        long total = pageResult.getTotal();
-        List<OutboundVO> records = pageResult.getResult().stream()
+        PageInfo<Outbound> pageInfo = new PageInfo<>(list);
+        long total = pageInfo.getTotal();
+        List<OutboundVO> records = pageInfo.getList().stream()
                 .map(this::convertToVO)
                 .collect(Collectors.toList());
         return new PageBean<>(total, records);

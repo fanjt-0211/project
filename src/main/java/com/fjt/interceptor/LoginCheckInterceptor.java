@@ -4,6 +4,7 @@ import com.fjt.annotation.RequireAdmin;
 import com.fjt.config.JwtProperties;
 import com.fjt.pojo.Result;
 import com.fjt.utils.JwtUtils;
+import com.fjt.utils.UserHolder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,11 +37,14 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         try {
             Claims claims = JwtUtils.parseJWT(jwtProperties.getAdminSecretKey(), token);
 
-            // 如果方法有 @RequireAdmin 注解，检查角色是否为管理员
+            Long userId = claims.get("id", Long.class);
+            Integer role = claims.get("role", Integer.class);
+            UserHolder.setUserId(userId);
+            UserHolder.setRole(role);
+
             if (handler instanceof HandlerMethod hm) {
                 RequireAdmin requireAdmin = hm.getMethodAnnotation(RequireAdmin.class);
                 if (requireAdmin != null) {
-                    Integer role = claims.get("role", Integer.class);
                     if (role == null || role != 1) {
                         response.setContentType("application/json");
                         response.setCharacterEncoding("UTF-8");

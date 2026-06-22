@@ -117,6 +117,34 @@ CREATE TABLE IF NOT EXISTS `warehouse_user` (
     INDEX `idx_username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 
-INSERT INTO `warehouse_user` (`username`, `password`, `real_name`, `role`, `status`) VALUES ('admin', 'e10adc3949ba59abbe56e057f20f883e', '管理员', 1, 1);
-INSERT INTO `warehouse` (`code`, `name`, `location`) VALUES ('WH001', '主仓库', 'A栋1楼');
-INSERT INTO `material_category` (`name`, `description`) VALUES ('电子设备', '电子元器件'), ('办公用品', '办公物品'), ('机械设备', '生产设备'), ('原材料', '生产原材料');
+INSERT INTO `warehouse_user` (`username`, `password`, `real_name`, `phone`, `email`, `role`, `status`) VALUES ('admin', 'e10adc3949ba59abbe56e057f20f883e', '管理员', '13800138000', 'admin@example.com', 1, 1);
+INSERT INTO `warehouse_user` (`username`, `password`, `real_name`, `phone`, `email`, `role`, `status`) VALUES ('lisi', 'e10adc3949ba59abbe56e057f20f883e', '张三', '18945678765', '382@qq.com', 2, 1);
+
+INSERT INTO `warehouse` (`code`, `name`, `location`, `capacity`) VALUES ('WH001', '主仓库', 'A栋1楼', 10000);
+INSERT INTO `warehouse` (`code`, `name`, `location`, `capacity`) VALUES ('WH002', '副仓库', 'B栋2楼', 5000);
+
+INSERT INTO `material_category` (`name`, `description`) VALUES ('电子设备', '电子元器件');
+INSERT INTO `material_category` (`name`, `description`) VALUES ('办公用品', '办公物品');
+INSERT INTO `material_category` (`name`, `description`) VALUES ('机械设备', '生产设备');
+INSERT INTO `material_category` (`name`, `description`) VALUES ('原材料', '生产原材料');
+
+INSERT INTO `material` (`code`, `name`, `category_id`, `specification`, `unit`, `purchase_price`, `sell_price`, `min_stock`, `max_stock`) VALUES ('MT001', '联想ThinkPad笔记本', 1, 'X1 Carbon', '台', 5000.00, 5999.00, 10, 100);
+INSERT INTO `material` (`code`, `name`, `category_id`, `specification`, `unit`, `purchase_price`, `sell_price`, `min_stock`, `max_stock`) VALUES ('MT002', '华为路由器', 1, 'AX3 Pro', '台', 299.00, 399.00, 50, 500);
+INSERT INTO `material` (`code`, `name`, `category_id`, `specification`, `unit`, `purchase_price`, `sell_price`, `min_stock`, `max_stock`) VALUES ('MT003', '得力中性笔', 2, '0.5mm', '支', 1.50, 3.00, 500, 5000);
+INSERT INTO `material` (`code`, `name`, `category_id`, `specification`, `unit`, `purchase_price`, `sell_price`, `min_stock`, `max_stock`) VALUES ('MT004', 'A4复印纸', 2, '70g', '包', 18.00, 25.00, 100, 1000);
+INSERT INTO `material` (`code`, `name`, `category_id`, `specification`, `unit`, `purchase_price`, `sell_price`, `min_stock`, `max_stock`) VALUES ('MT005', '钢材', 4, 'Q235', '吨', 4500.00, 5000.00, 5, 100);
+INSERT INTO `material` (`code`, `name`, `category_id`, `specification`, `unit`, `purchase_price`, `sell_price`, `min_stock`, `max_stock`) VALUES ('MT006', '蓝牙耳机', 1, 'FreeBuds Pro', '个', 99.00, 149.00, 20, 200);
+
+INSERT INTO `stock` (`material_id`, `warehouse_id`, `quantity`) VALUES (1, 1, 50);
+INSERT INTO `stock` (`material_id`, `warehouse_id`, `quantity`) VALUES (2, 1, 90);
+INSERT INTO `stock` (`material_id`, `warehouse_id`, `quantity`) VALUES (3, 2, 1000);
+INSERT INTO `stock` (`material_id`, `warehouse_id`, `quantity`) VALUES (4, 2, 300);
+INSERT INTO `stock` (`material_id`, `warehouse_id`, `quantity`) VALUES (5, 1, 20);
+
+INSERT INTO `inbound` (`inbound_no`, `type`, `material_id`, `warehouse_id`, `quantity`, `unit_price`, `total_amount`, `supplier`, `operator_id`, `status`) VALUES ('IN202606200001', 1, 1, 1, 50, 5000.00, 250000.00, '联想供应商', 1, 1);
+INSERT INTO `inbound` (`inbound_no`, `type`, `material_id`, `warehouse_id`, `quantity`, `unit_price`, `total_amount`, `supplier`, `operator_id`, `status`) VALUES ('IN202606200002', 1, 2, 1, 100, 299.00, 29900.00, '华为供应商', 1, 1);
+INSERT INTO `inbound` (`inbound_no`, `type`, `material_id`, `warehouse_id`, `quantity`, `unit_price`, `total_amount`, `supplier`, `operator_id`, `status`) VALUES ('IN202606200003', 1, 3, 2, 1000, 1.50, 1500.00, '得力供应商', 1, 1);
+
+INSERT INTO `outbound` (`outbound_no`, `type`, `material_id`, `warehouse_id`, `quantity`, `unit_price`, `total_amount`, `recipient`, `department`, `operator_id`, `status`) VALUES ('OUT202606200001', 1, 1, 1, 5, 5000.00, 25000.00, '李四', '技术部', 1, 1);
+INSERT INTO `outbound` (`outbound_no`, `type`, `material_id`, `warehouse_id`, `quantity`, `unit_price`, `total_amount`, `recipient`, `department`, `operator_id`, `status`) VALUES ('OUT202606200002', 1, 3, 2, 50, 1.50, 75.00, '张三', '行政部', 1, 1);
+INSERT INTO `outbound` (`outbound_no`, `type`, `material_id`, `warehouse_id`, `quantity`, `unit_price`, `total_amount`, `recipient`, `department`, `operator_id`, `status`) VALUES ('OUT202606200003', 1, 2, 1, 10, 299.00, 2990.00, '王五', '技术部', 1, 1);

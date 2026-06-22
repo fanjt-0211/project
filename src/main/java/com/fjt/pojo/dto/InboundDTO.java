@@ -12,6 +12,5 @@ public class InboundDTO {
     private Integer quantity;
     private BigDecimal unitPrice;
     private String supplier;
-    private Long operatorId;
     private String remark;
 }

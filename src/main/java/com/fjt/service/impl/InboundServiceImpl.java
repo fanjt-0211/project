@@ -14,8 +14,9 @@ import com.fjt.pojo.vo.InboundVO;
 import com.fjt.service.InboundService;
 import com.fjt.service.StockService;
 import com.fjt.pojo.PageBean;
-import com.github.pagehelper.Page;
+import com.fjt.utils.UserHolder;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,13 +49,22 @@ public class InboundServiceImpl implements InboundService {
     @Override
     @Transactional
     public void add(InboundDTO dto) {
+        Material material = materialMapper.findById(dto.getMaterialId());
+        if (material == null) {
+            throw new RuntimeException("物资不存在");
+        }
+        
+        Warehouse warehouse = warehouseMapper.findById(dto.getWarehouseId());
+        if (warehouse == null) {
+            throw new RuntimeException("仓库不存在");
+        }
+        
         Inbound inbound = new Inbound();
         BeanUtils.copyProperties(dto, inbound);
         
         inbound.setInboundNo(generateInboundNo());
         
-        Material material = materialMapper.findById(dto.getMaterialId());
-        if (material != null && inbound.getUnitPrice() == null) {
+        if (inbound.getUnitPrice() == null) {
             inbound.setUnitPrice(material.getPurchasePrice());
         }
         
@@ -63,6 +73,7 @@ public class InboundServiceImpl implements InboundService {
         }
         
         inbound.setStatus(1);
+        inbound.setOperatorId(UserHolder.getUserId());
         
         inboundMapper.insert(inbound);
         stockService.increaseStock(inbound.getMaterialId(), inbound.getWarehouseId(), inbound.getQuantity());
@@ -92,9 +103,9 @@ public class InboundServiceImpl implements InboundService {
     public PageBean<InboundVO> list(InboundQueryDTO query) {
         PageHelper.startPage(query.getPageNum(), query.getPageSize());
         List<Inbound> list = inboundMapper.search(query);
-        Page<Inbound> pageResult = (Page<Inbound>) list;
-        long total = pageResult.getTotal();
-        List<InboundVO> records = pageResult.getResult().stream()
+        PageInfo<Inbound> pageInfo = new PageInfo<>(list);
+        long total = pageInfo.getTotal();
+        List<InboundVO> records = pageInfo.getList().stream()
                 .map(this::convertToVO)
                 .collect(Collectors.toList());
         return new PageBean<>(total, records);
