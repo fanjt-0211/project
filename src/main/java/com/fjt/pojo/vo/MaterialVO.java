@@ -1,5 +1,6 @@
 package com.fjt.pojo.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -19,5 +20,6 @@ public class MaterialVO {
     private Integer minStock;
     private Integer maxStock;
     private String description;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createdAt;
 }
