@@ -41,4 +41,11 @@
     <update id="decreaseStock">
         UPDATE stock SET quantity=quantity-#{quantity} WHERE material_id=#{materialId} AND warehouse_id=#{warehouseId}
     </update>
+
+    <select id="findStockWarning" resultType="com.fjt.pojo.entity.Stock">
+        SELECT s.* FROM stock s
+        INNER JOIN material m ON s.material_id = m.id
+        WHERE s.quantity &lt; m.min_stock
+        ORDER BY s.material_id
+    </select>
 </mapper>

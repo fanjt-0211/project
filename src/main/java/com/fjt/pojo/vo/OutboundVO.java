@@ -22,7 +22,6 @@ public class OutboundVO {
     private BigDecimal totalAmount;
     private String recipient;
     private String department;
-    private Long operatorId;
     private String operatorName;
     private String remark;
     private Integer status;

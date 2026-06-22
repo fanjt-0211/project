@@ -21,7 +21,6 @@ public class InboundVO {
     private BigDecimal unitPrice;
     private BigDecimal totalAmount;
     private String supplier;
-    private Long operatorId;
     private String operatorName;
     private String remark;
     private Integer status;

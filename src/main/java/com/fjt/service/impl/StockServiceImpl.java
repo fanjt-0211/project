@@ -16,7 +16,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -90,17 +89,7 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public List<StockVO> findStockWarning() {
-        List<Material> materials = materialMapper.findStockWarning();
-        List<Stock> warningStocks = new ArrayList<>();
-        for (Material material : materials) {
-            List<Stock> stocks = stockMapper.search(new StockQueryDTO());
-            for (Stock stock : stocks) {
-                if (stock.getMaterialId().equals(material.getId())) {
-                    warningStocks.add(stock);
-                }
-            }
-        }
-        return warningStocks.stream()
+        return stockMapper.findStockWarning().stream()
                 .map(this::convertToVO)
                 .collect(Collectors.toList());
     }
