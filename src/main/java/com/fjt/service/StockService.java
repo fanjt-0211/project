@@ -16,4 +16,5 @@ public interface StockService {
     void increaseStock(Long materialId, Long warehouseId, Integer quantity);
     void decreaseStock(Long materialId, Long warehouseId, Integer quantity);
     List<StockVO> findStockWarning();
+    int countByWarehouseId(Long warehouseId);
 }

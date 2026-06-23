@@ -48,4 +48,8 @@
         WHERE s.quantity &lt; m.min_stock
         ORDER BY s.material_id
     </select>
+
+    <select id="countByWarehouseId" resultType="int">
+        SELECT COUNT(*) FROM stock WHERE warehouse_id = #{warehouseId}
+    </select>
 </mapper>

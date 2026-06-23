@@ -13,4 +13,5 @@ public interface WarehouseService {
     WarehouseVO findById(Long id);
     Warehouse findByCode(String code);
     List<WarehouseVO> search(WarehouseQueryDTO query);
+    void updateStatus(Long id, Integer status);
 }

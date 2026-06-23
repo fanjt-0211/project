@@ -35,7 +35,9 @@ public class UserController {
             claims.put("username", userVO.getUsername());
             claims.put("role", userVO.getRole());
             String token = JwtUtils.createJWT(jwtProperties.getAdminSecretKey(), jwtProperties.getAdminTtl(), claims);
-            return Result.success(token);
+            Result<String> result = Result.success(token);
+            result.setMessage("登录成功");
+            return result;
         }
         return Result.error("用户名或密码错误");
     }

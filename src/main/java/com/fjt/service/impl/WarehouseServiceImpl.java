@@ -5,6 +5,7 @@ import com.fjt.pojo.dto.WarehouseDTO;
 import com.fjt.pojo.dto.WarehouseQueryDTO;
 import com.fjt.pojo.entity.Warehouse;
 import com.fjt.pojo.vo.WarehouseVO;
+import com.fjt.service.StockService;
 import com.fjt.service.WarehouseService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Autowired
     private WarehouseMapper warehouseMapper;
+
+    @Autowired
+    private StockService stockService;
 
     @Override
     public void add(WarehouseDTO dto) {
@@ -69,6 +73,23 @@ public class WarehouseServiceImpl implements WarehouseService {
         return warehouseMapper.search(query).stream()
                 .map(this::convertToVO)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * 启用/禁用仓库
+     */
+    @Override
+    public void updateStatus(Long id, Integer status) {
+        if (status == 0) {
+            int count = stockService.countByWarehouseId(id);
+            if (count > 0) {
+                throw new RuntimeException("该仓库下还有库存，无法禁用");
+            }
+        }
+        Warehouse warehouse = new Warehouse();
+        warehouse.setId(id);
+        warehouse.setStatus(status);
+        warehouseMapper.update(warehouse);
     }
 
     private WarehouseVO convertToVO(Warehouse warehouse) {

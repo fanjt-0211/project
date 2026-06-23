@@ -21,4 +21,9 @@ public interface StockMapper {
      * 查询库存预警：库存量低于最低库存阈值的库存记录
      */
     List<Stock> findStockWarning();
+
+    /**
+     * 根据仓库id查询库存数量
+     */
+    int countByWarehouseId(@Param("warehouseId") Long warehouseId);
 }

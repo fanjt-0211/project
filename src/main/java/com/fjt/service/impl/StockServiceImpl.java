@@ -68,6 +68,9 @@ public class StockServiceImpl implements StockService {
         return new PageBean<>(total, records);
     }
 
+    /**
+     * 增加库存
+     */
     @Override
     public void increaseStock(Long materialId, Long warehouseId, Integer quantity) {
         Stock stock = stockMapper.findByMaterialAndWarehouse(materialId, warehouseId);
@@ -82,11 +85,17 @@ public class StockServiceImpl implements StockService {
         }
     }
 
+    /**
+     * 减少库存
+     */
     @Override
     public void decreaseStock(Long materialId, Long warehouseId, Integer quantity) {
         stockMapper.decreaseStock(materialId, warehouseId, quantity);
     }
 
+    /**
+     * 查询库存预警
+     */
     @Override
     public List<StockVO> findStockWarning() {
         return stockMapper.findStockWarning().stream()
@@ -94,6 +103,18 @@ public class StockServiceImpl implements StockService {
                 .collect(Collectors.toList());
     }
 
+
+    /**
+     * 根据仓库id查询库存数量
+     */
+    @Override
+    public int countByWarehouseId(Long warehouseId) {
+        return stockMapper.countByWarehouseId(warehouseId);
+    }
+
+    /**
+     * 转换为VO
+     */
     private StockVO convertToVO(Stock stock) {
         StockVO vo = new StockVO();
         BeanUtils.copyProperties(stock, vo);

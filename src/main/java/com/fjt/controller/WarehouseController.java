@@ -54,4 +54,13 @@ public class WarehouseController {
         warehouseService.update(dto, id);
         return Result.success();
     }
+
+    /**
+     * 启用/禁用仓库
+     */
+    @PostMapping("/status/{status}")
+    public Result<Void> updateStatus(@PathVariable Integer status, @RequestBody WarehouseDTO dto) {
+        warehouseService.updateStatus(dto.getId(), status);
+        return Result.success();
+    }
 }

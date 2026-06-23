@@ -6,7 +6,6 @@ import lombok.Data;
 public class MaterialCategoryQueryDTO {
     private Long id;
     private String name;
-    private String code;
     private Long parentId;
     private Integer status;
 }

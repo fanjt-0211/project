@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fjt.mapper.MaterialCategoryMapper">
     <insert id="insert" parameterType="com.fjt.pojo.entity.MaterialCategory">
-        INSERT INTO material_category(name, description, parent_id, sort_order)
-        VALUES(#{name}, #{description}, #{parentId}, #{sortOrder})
+        INSERT INTO material_category(name, description, parent_id, sort_order, status)
+        VALUES(#{name}, #{description}, #{parentId}, #{sortOrder}, #{status})
     </insert>
 
     <update id="update" parameterType="com.fjt.pojo.entity.MaterialCategory">
@@ -30,9 +30,6 @@
             </if>
             <if test="name != null and name != ''">
                 AND name LIKE CONCAT('%', #{name}, '%')
-            </if>
-            <if test="code != null and code != ''">
-                AND code LIKE CONCAT('%', #{code}, '%')
             </if>
             <if test="parentId != null">
                 AND parent_id = #{parentId}
