@@ -55,6 +55,12 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
                 }
             }
             return true;
+        } catch (io.jsonwebtoken.ExpiredJwtException e) {
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            PrintWriter writer = response.getWriter();
+            writer.write(new ObjectMapper().writeValueAsString(Result.error("token已过期，请重新登录")));
+            return false;
         } catch (Exception e) {
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
