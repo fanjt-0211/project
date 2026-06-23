@@ -6,7 +6,6 @@ import com.fjt.pojo.entity.Material;
 import com.fjt.pojo.vo.MaterialVO;
 
 import com.fjt.pojo.PageBean;
-import java.util.List;
 
 public interface MaterialService {
     void add(MaterialDTO dto);
@@ -14,5 +13,4 @@ public interface MaterialService {
     MaterialVO findById(Long id);
     Material findByCode(String code);
     PageBean<MaterialVO> list(MaterialQueryDTO query);
-    List<MaterialVO> findStockWarning();
 }

@@ -96,16 +96,6 @@ public class MaterialServiceImpl implements MaterialService {
     }
 
     /**
-     * 查询库存预警物料
-     */
-    @Override
-    public List<MaterialVO> findStockWarning() {
-        return materialMapper.findStockWarning().stream()
-                .map(this::convertToVO)
-                .collect(Collectors.toList());
-    }
-
-    /**
      * 转换为VO
      */
     private MaterialVO convertToVO(Material material) {

@@ -1,16 +1,15 @@
 package com.fjt.service;
 
+import com.fjt.pojo.PageBean;
 import com.fjt.pojo.dto.MaterialCategoryDTO;
 import com.fjt.pojo.dto.MaterialCategoryQueryDTO;
 import com.fjt.pojo.entity.MaterialCategory;
 import com.fjt.pojo.vo.MaterialCategoryVO;
-
-import java.util.List;
 
 public interface MaterialCategoryService {
     void add(MaterialCategoryDTO dto);
     void update(MaterialCategoryDTO dto, Long id);
     void updateStatus(Long id, Integer status);
     MaterialCategoryVO findById(Long id);
-    List<MaterialCategoryVO> search(MaterialCategoryQueryDTO query);
+    PageBean<MaterialCategoryVO> search(MaterialCategoryQueryDTO query);
 }

@@ -2,11 +2,14 @@ package com.fjt.service.impl;
 
 import com.fjt.mapper.MaterialCategoryMapper;
 import com.fjt.mapper.MaterialMapper;
+import com.fjt.pojo.PageBean;
 import com.fjt.pojo.dto.MaterialCategoryDTO;
 import com.fjt.pojo.dto.MaterialCategoryQueryDTO;
 import com.fjt.pojo.entity.MaterialCategory;
 import com.fjt.pojo.vo.MaterialCategoryVO;
 import com.fjt.service.MaterialCategoryService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,13 +75,17 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
     }
 
     /**
-     * 查询所有分类 - 支持多条件查询
+     * 分页查询分类 - 支持多条件查询
      */
     @Override
-    public List<MaterialCategoryVO> search(MaterialCategoryQueryDTO query) {
-        return materialCategoryMapper.search(query).stream()
+    public PageBean<MaterialCategoryVO> search(MaterialCategoryQueryDTO query) {
+        PageHelper.startPage(query.getPageNum(), query.getPageSize());
+        List<MaterialCategory> list = materialCategoryMapper.search(query);
+        PageInfo<MaterialCategory> pageInfo = new PageInfo<>(list);
+        List<MaterialCategoryVO> records = pageInfo.getList().stream()
                 .map(this::convertToVO)
                 .collect(Collectors.toList());
+        return new PageBean<>(pageInfo.getTotal(), records);
     }
 
     /**

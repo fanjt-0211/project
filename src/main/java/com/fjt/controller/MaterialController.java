@@ -1,6 +1,5 @@
 package com.fjt.controller;
 
-import com.fjt.annotation.RequireAdmin;
 import com.fjt.pojo.PageBean;
 import com.fjt.pojo.dto.MaterialDTO;
 import com.fjt.pojo.dto.MaterialQueryDTO;
@@ -9,8 +8,6 @@ import com.fjt.pojo.vo.MaterialVO;
 import com.fjt.service.MaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/material")
@@ -37,14 +34,6 @@ public class MaterialController {
             return Result.error("物资不存在");
         }
         return Result.success(material);
-    }
-
-    /**
-     * 查询库存预警物料
-     */
-    @GetMapping("/warning")
-    public Result<List<MaterialVO>> getStockWarning() {
-        return Result.success(materialService.findStockWarning());
     }
 
     /**

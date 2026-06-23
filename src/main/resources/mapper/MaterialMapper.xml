@@ -50,13 +50,6 @@
         ORDER BY category_id ASC
     </select>
 
-    <select id="findStockWarning" resultType="com.fjt.pojo.entity.Material">
-        SELECT m.* FROM material m
-        LEFT JOIN stock s ON m.id = s.material_id
-        GROUP BY m.id
-        HAVING COALESCE(SUM(s.quantity), 0) &lt; MIN(m.min_stock)
-    </select>
-
     <select id="countByCategoryId" resultType="int">
         SELECT COUNT(*) FROM material WHERE category_id=#{categoryId}
     </select>

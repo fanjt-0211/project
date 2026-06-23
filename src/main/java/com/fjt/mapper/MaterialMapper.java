@@ -31,10 +31,6 @@ public interface MaterialMapper {
      */
     List<Material> search(MaterialQueryDTO query);
     /**
-     * 查询库存预警物料
-     */
-    List<Material> findStockWarning();
-    /**
      * 根据分类id查询物料数量
      */
     int countByCategoryId(Long categoryId);

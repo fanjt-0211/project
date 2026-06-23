@@ -1,5 +1,6 @@
 package com.fjt.controller;
 
+import com.fjt.pojo.PageBean;
 import com.fjt.pojo.dto.MaterialCategoryDTO;
 import com.fjt.pojo.dto.MaterialCategoryQueryDTO;
 import com.fjt.pojo.Result;
@@ -7,8 +8,6 @@ import com.fjt.pojo.vo.MaterialCategoryVO;
 import com.fjt.service.MaterialCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/category")
@@ -18,10 +17,10 @@ public class MaterialCategoryController {
     private MaterialCategoryService materialCategoryService;
 
     /**
-     * 查询所有分类 - 支持多条件查询
+     * 分页查询分类 - 支持多条件查询
      */
     @GetMapping
-    public Result<List<MaterialCategoryVO>> list(MaterialCategoryQueryDTO query) {
+    public Result<PageBean<MaterialCategoryVO>> list(MaterialCategoryQueryDTO query) {
         return Result.success(materialCategoryService.search(query));
     }
 

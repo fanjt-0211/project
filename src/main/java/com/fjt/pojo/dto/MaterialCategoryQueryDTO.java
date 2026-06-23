@@ -3,7 +3,7 @@ package com.fjt.pojo.dto;
 import lombok.Data;
 
 @Data
-public class MaterialCategoryQueryDTO {
+public class MaterialCategoryQueryDTO extends PageQueryDTO {
     private Long id;
     private String name;
     private Long parentId;
