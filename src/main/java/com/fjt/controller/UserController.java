@@ -9,6 +9,7 @@ import com.fjt.pojo.Result;
 import com.fjt.pojo.vo.UserVO;
 import com.fjt.service.UserService;
 import com.fjt.utils.JwtUtils;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,7 +59,7 @@ public class UserController {
 
     @RequireAdmin
     @PostMapping
-    public Result<Void> add(@RequestBody UserDTO userDTO) {
+    public Result<Void> add(@RequestBody @Valid UserDTO userDTO) {
         userService.add(userDTO);
         return Result.success();
     }
@@ -71,7 +72,7 @@ public class UserController {
      */
     @RequireAdmin
     @PutMapping
-    public Result<Void> update(@RequestBody UserDTO userDTO) {
+    public Result<Void> update(@RequestBody @Valid UserDTO userDTO) {
         userService.update(userDTO);
         return Result.success();
     }
